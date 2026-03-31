@@ -21,8 +21,8 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### Stars
 
-- [ ] **STAR-01**: Star field with thousands of white dots visible on ALL sections (fixed position)
-- [ ] **STAR-02**: Subtle slow drift animation on stars
+- [x] **STAR-01**: Star field with thousands of white dots visible on ALL sections (fixed position)
+- [x] **STAR-02**: Subtle slow drift animation on stars
 
 ### Globe
 
@@ -125,8 +125,8 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | STYL-02 | Phase 1 (Foundation) | Complete |
 | STYL-03 | Phase 1 (Foundation) | Complete |
 | RESP-03 | Phase 1 (Foundation) | Complete |
-| STAR-01 | Phase 2 (Canvas Layer) | Pending |
-| STAR-02 | Phase 2 (Canvas Layer) | Pending |
+| STAR-01 | Phase 2 (Canvas Layer) | Complete |
+| STAR-02 | Phase 2 (Canvas Layer) | Complete |
 | GLOB-01 | Phase 2 (Canvas Layer) | Complete |
 | GLOB-02 | Phase 2 (Canvas Layer) | Complete |
 | GLOB-03 | Phase 2 (Canvas Layer) | Complete |
