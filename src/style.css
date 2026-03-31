@@ -175,3 +175,128 @@ body {
 .la-label.visible {
   opacity: 1;
 }
+
+
+/* ==========================================================================
+   Section 8 — Scroll Shell UI (Nav Bar, Progress Bar, Dot Nav)
+   ========================================================================== */
+
+/* --- Nav Bar --- */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-8);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.nav-bar__logo {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-white);
+  letter-spacing: 0.15em;
+}
+
+.nav-bar__links {
+  display: flex;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.nav-bar__link {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-grey-1);
+  letter-spacing: 0.05em;
+  transition: color var(--transition-fast);
+}
+
+.nav-bar__link:hover {
+  color: var(--color-white);
+}
+
+.nav-bar__link--resume {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.nav-bar__link--resume:hover {
+  color: var(--color-white);
+}
+
+/* --- Progress Bar --- */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  z-index: 101;
+  pointer-events: none;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 100ms ease-out;
+}
+
+/* --- Dot Nav --- */
+.dot-nav {
+  position: fixed;
+  right: var(--space-6);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  z-index: 100;
+}
+
+.dot-nav__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-grey-2);
+  background: transparent;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  padding: 0;
+}
+
+.dot-nav__dot:hover {
+  border-color: var(--color-white);
+  transform: scale(1.3);
+}
+
+.dot-nav__dot--active {
+  background: var(--color-white);
+  border-color: var(--color-white);
+}
+
+/* --- Mobile: hide nav links, keep logo --- */
+@media (max-width: 768px) {
+  .nav-bar__links {
+    display: none;
+  }
+  .nav-bar {
+    padding: var(--space-3) var(--space-4);
+  }
+  .dot-nav {
+    right: var(--space-3);
+  }
+  .dot-nav__dot {
+    width: 8px;
+    height: 8px;
+  }
+}

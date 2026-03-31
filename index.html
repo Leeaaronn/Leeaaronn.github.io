@@ -18,6 +18,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   </head>
   <body>
+    <nav class="nav-bar">
+      <a href="#hero" class="nav-bar__logo">AARON LEE</a>
+      <div class="nav-bar__links">
+        <a href="#hero" class="nav-bar__link">Home</a>
+        <a href="#about" class="nav-bar__link">About</a>
+        <a href="#projects-1" class="nav-bar__link">Projects</a>
+        <a href="#skills" class="nav-bar__link">Skills</a>
+        <a href="#contact" class="nav-bar__link">Contact</a>
+        <a href="./assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="nav-bar__link nav-bar__link--resume">Resume</a>
+      </div>
+    </nav>
+
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+
+    <nav class="dot-nav" aria-label="Section navigation">
+      <button class="dot-nav__dot dot-nav__dot--active" data-section="hero" aria-label="Go to Hero"></button>
+      <button class="dot-nav__dot" data-section="about" aria-label="Go to About"></button>
+      <button class="dot-nav__dot" data-section="projects-1" aria-label="Go to Projects 1"></button>
+      <button class="dot-nav__dot" data-section="projects-2" aria-label="Go to Projects 2"></button>
+      <button class="dot-nav__dot" data-section="projects-3" aria-label="Go to Projects 3"></button>
+      <button class="dot-nav__dot" data-section="projects-4" aria-label="Go to Projects 4"></button>
+      <button class="dot-nav__dot" data-section="skills" aria-label="Go to Skills"></button>
+      <button class="dot-nav__dot" data-section="contact" aria-label="Go to Contact"></button>
+    </nav>
+
     <main class="scroll-container">
       <section id="hero" class="section">
         <!-- Hero content — Phase 4 -->
