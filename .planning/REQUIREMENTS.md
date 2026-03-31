@@ -36,15 +36,15 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### Scroll
 
-- [ ] **SCRL-01**: Scroll-snap container (y mandatory) with 8 sections at 100vh (100svh on mobile)
-- [ ] **SCRL-02**: Fixed progress bar at top showing scroll percentage
-- [ ] **SCRL-03**: Fixed dot navigation on right side, clickable, shows active section
-- [ ] **SCRL-04**: Section detection drives globe behavior and content animations
+- [x] **SCRL-01**: Scroll-snap container (y mandatory) with 8 sections at 100vh (100svh on mobile)
+- [x] **SCRL-02**: Fixed progress bar at top showing scroll percentage
+- [x] **SCRL-03**: Fixed dot navigation on right side, clickable, shows active section
+- [x] **SCRL-04**: Section detection drives globe behavior and content animations
 
 ### Navigation
 
-- [ ] **NAV-01**: Floating nav: "AARON LEE" left, section links right, semi-transparent backdrop-blur
-- [ ] **NAV-02**: Resume link opens assets/resume.pdf in new tab
+- [x] **NAV-01**: Floating nav: "AARON LEE" left, section links right, semi-transparent backdrop-blur
+- [x] **NAV-02**: Resume link opens assets/resume.pdf in new tab
 
 ### Hero
 
@@ -135,12 +135,12 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | GLOB-06 | Phase 2 (Canvas Layer) | Pending |
 | GLOB-07 | Phase 2 (Canvas Layer) | Pending |
 | RESP-02 | Phase 2 (Canvas Layer) | Complete |
-| SCRL-01 | Phase 3 (Scroll Shell) | Pending |
-| SCRL-02 | Phase 3 (Scroll Shell) | Pending |
-| SCRL-03 | Phase 3 (Scroll Shell) | Pending |
-| SCRL-04 | Phase 3 (Scroll Shell) | Pending |
-| NAV-01 | Phase 3 (Scroll Shell) | Pending |
-| NAV-02 | Phase 3 (Scroll Shell) | Pending |
+| SCRL-01 | Phase 3 (Scroll Shell) | Complete |
+| SCRL-02 | Phase 3 (Scroll Shell) | Complete |
+| SCRL-03 | Phase 3 (Scroll Shell) | Complete |
+| SCRL-04 | Phase 3 (Scroll Shell) | Complete |
+| NAV-01 | Phase 3 (Scroll Shell) | Complete |
+| NAV-02 | Phase 3 (Scroll Shell) | Complete |
 | HERO-01 | Phase 4 (Hero Section) | Pending |
 | HERO-02 | Phase 4 (Hero Section) | Pending |
 | HERO-03 | Phase 4 (Hero Section) | Pending |
