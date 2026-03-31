@@ -19,9 +19,10 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 - [x] Three.js 3D Earth globe with real NASA Blue Marble texture, atmospheric glow (#60a5fa), LA marker, slow rotation — Validated in Phase 2: Canvas Layer
 - [x] Globe scroll behavior: centered on hero, zooms to LA on about, fades out past about (stars remain) — Validated in Phase 2: Canvas Layer
 
+- [x] Scroll-snap container (y mandatory), progress bar, dot navigation, section detection — Validated in Phase 3: Scroll Shell
+- [x] Floating nav bar: "AARON LEE" left, section links + Resume right, semi-transparent backdrop-blur — Validated in Phase 3: Scroll Shell
+
 ### Active
-- [ ] Scroll-snap container (y mandatory), progress bar, dot navigation, section detection
-- [ ] Floating nav bar: "AARON LEE" left, section links + Resume right, semi-transparent backdrop-blur
 - [ ] Hero section: eyebrow text, title ("Data that tells the real story"), subtitle, CTA buttons (GitHub, LinkedIn, Email), scroll indicator, staggered load animation
 - [ ] About section: portrait (./assets/portrait.jpg), bio, stats row, detail chips, resume download, fade-up animation on snap
 - [ ] 6 placeholder sections for scroll system (Projects x4, Skills, Contact)
@@ -82,7 +83,7 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 |----------|-----------|---------|
 | Vite + vanilla JS over React | Portfolio is simple enough; no framework overhead needed | Validated (Phase 1) |
 | Three.js for globe | Industry standard for WebGL; good docs and ecosystem | Validated (Phase 2) |
-| Scroll-snap over smooth scroll library | Native CSS feature, no extra dependency | -- Pending |
+| Scroll-snap over smooth scroll library | Native CSS feature, no extra dependency | Validated (Phase 3) |
 | Real Earth texture over procedural | Previous prototype with procedural looked fake | Validated (Phase 2) |
 | Fixed star field canvas | Must persist across all sections as site background | Validated (Phase 2) |
 | 8 sections with 6 placeholders | Scroll system needs all sections to work; content comes in Phase 2 | -- Pending |
@@ -105,4 +106,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after Phase 2 completion*
+*Last updated: 2026-03-31 after Phase 3 completion*
