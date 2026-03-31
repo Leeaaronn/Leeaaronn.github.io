@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-canvas-layer/02-01-PLAN.md
-last_updated: "2026-03-31T21:30:14.057Z"
-last_activity: 2026-03-31
+stopped_at: "Checkpoint 03-01 Task 3: awaiting visual verification"
+last_updated: "2026-03-31T21:51:59.257Z"
+last_activity: 2026-03-31 -- Phase 03 execution started
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  completed_phases: 3
+  total_plans: 6
+  completed_plans: 6
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** A polished, visually striking portfolio that makes hiring managers remember Aaron Lee — the 3D globe signals technical craft beyond a typical resume site.
-**Current focus:** Phase 02 — canvas-layer
+**Current focus:** Phase 03 — scroll-shell
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-03-31
+Phase: 03 (scroll-shell) — EXECUTING
+Plan: 1 of 1
+Status: Executing Phase 03
+Last activity: 2026-03-31 -- Phase 03 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -75,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 02-canvas-layer]: CAMERA_Z_DEFAULT=5 declared at module scope in globe.js so Plan 03 scroll handler can reference it without tight coupling
 - [Phase 02-canvas-layer]: alpha:true + no setClearColor makes canvas transparent; black background from body CSS
 - [Phase 02-canvas-layer]: initStars() called on DOMContentLoaded so body exists before canvas append
+- [Phase 03-scroll-shell]: Centralized scroll detection in scroll.js via callback pattern — main.js wires updateGlobe as onScroll callback to avoid tight coupling
+- [Phase 03-scroll-shell]: Single passive body scroll listener in scroll.js drives both UI (progress bar, dot nav) and globe — no duplicate listeners
 
 ### Pending Todos
 
@@ -88,6 +90,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T20:57:09.479Z
-Stopped at: Completed 02-canvas-layer/02-01-PLAN.md
+Last session: 2026-03-31T21:51:51.096Z
+Stopped at: Checkpoint 03-01 Task 3: awaiting visual verification
 Resume file: None
