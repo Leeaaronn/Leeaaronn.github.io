@@ -61,7 +61,9 @@ Plans:
   3. The dot navigation on the right side highlights the active section and clicking a dot navigates to that section
   4. The floating nav bar shows "AARON LEE" on the left and section links on the right with semi-transparent backdrop blur
   5. Clicking the Resume nav link opens `assets/resume.pdf` in a new tab
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 03-01-PLAN.md — Nav bar, progress bar, dot nav, and centralized scroll detection in scroll.js
 **UI hint**: yes
 
 ### Phase 4: Hero Section
@@ -97,7 +99,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 2/2 | Complete |  |
-| 2. Canvas Layer | 2/3 | In Progress|  |
-| 3. Scroll Shell | 0/? | Not started | - |
+| 2. Canvas Layer | 3/3 | Complete |  |
+| 3. Scroll Shell | 0/1 | Not started | - |
 | 4. Hero Section | 0/? | Not started | - |
 | 5. About Section | 0/? | Not started | - |
