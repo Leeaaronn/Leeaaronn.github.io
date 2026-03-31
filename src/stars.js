@@ -26,6 +26,7 @@ export function initStars() {
   renderer.domElement.style.zIndex = '0';
   renderer.domElement.style.pointerEvents = 'none';
 
+  renderer.domElement.id = 'stars-canvas';
   document.body.appendChild(renderer.domElement);
 
   // Scene + camera
@@ -70,6 +71,7 @@ export function initStars() {
 
   // Shooting stars — CSS-animated diagonal streaks on a DOM overlay
   const shootingContainer = document.createElement('div');
+  shootingContainer.id = 'shooting-stars';
   shootingContainer.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:hidden;';
   document.body.appendChild(shootingContainer);
 
