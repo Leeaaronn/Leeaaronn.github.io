@@ -126,20 +126,8 @@ body {
 
 
 /* ==========================================================================
-   Section 5 — Placeholder Styles (for Phase 2+ sections)
+   Section 5 — (Reserved)
    ========================================================================== */
-
-.section--placeholder {
-  opacity: 0.3;
-}
-
-.placeholder-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-base);
-  color: var(--color-grey-2);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
 
 
 /* ==========================================================================
@@ -629,5 +617,244 @@ body {
     width: 100%;
     max-width: 280px;
     text-align: center;
+  }
+}
+
+
+/* ==========================================================================
+   Section 11 — LA Scene (Final Section)
+   ========================================================================== */
+
+/* --- Scene container --- */
+.la-scene {
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+  background: var(--color-black);
+}
+
+/* --- Sky gradient — space transitions to LA blue sky --- */
+.la-scene__sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(96, 165, 250, 0.03) 15%,
+    rgba(96, 165, 250, 0.08) 30%,
+    rgba(135, 206, 235, 0.12) 45%,
+    rgba(135, 206, 235, 0.18) 60%,
+    rgba(96, 165, 250, 0.15) 75%,
+    rgba(26, 26, 46, 0.9) 90%,
+    #0d0d1a 100%
+  );
+  z-index: 1;
+}
+
+/* --- Hills with Hollywood sign --- */
+.la-scene__hills {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  height: 200px;
+  z-index: 2;
+}
+
+.la-scene__hills-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- City buildings silhouette --- */
+.la-scene__buildings {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  z-index: 3;
+}
+
+.la-scene__buildings-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Palm trees --- */
+.la-scene__palms {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.la-scene__palm {
+  position: absolute;
+  bottom: 10%;
+  height: 140px;
+  opacity: 0.7;
+}
+
+.la-scene__palm--1 {
+  left: 5%;
+}
+
+.la-scene__palm--2 {
+  right: 8%;
+  height: 120px;
+}
+
+/* --- Dark ground/street --- */
+.la-scene__ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8%;
+  background: #0a0a14;
+  z-index: 5;
+}
+
+/* --- Content overlay --- */
+.la-scene__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-8);
+  width: 100%;
+  max-width: 700px;
+}
+
+/* --- Heading --- */
+.la-scene__heading {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 400;
+  color: var(--color-white);
+  margin-bottom: var(--space-12);
+}
+
+/* --- 2x2 Project Grid --- */
+.la-scene__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-12);
+  width: 100%;
+}
+
+/* --- Project Cards --- */
+.la-scene__card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 280px;
+  justify-self: center;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.la-scene__card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.3), 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.la-scene__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- Card hover overlay with title --- */
+.la-scene__card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--space-4);
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.la-scene__card:hover .la-scene__card-overlay {
+  opacity: 1;
+}
+
+.la-scene__card-title {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+/* --- Contact links (reuses hero__cta style) --- */
+.la-scene__contact {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* --- LA Scene fade-in on snap --- */
+@keyframes la-scene-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#la-scene .la-scene__content {
+  opacity: 0;
+  transition: none;
+}
+
+#la-scene.la-scene-visible .la-scene__content {
+  animation: la-scene-fade-in 0.8s ease-out forwards;
+}
+
+/* --- LA Scene Mobile --- */
+@media (max-width: 768px) {
+  .la-scene__content {
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .la-scene__heading {
+    font-size: 32px;
+  }
+
+  .la-scene__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .la-scene__card {
+    max-width: 280px;
+  }
+
+  .la-scene__contact {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .la-scene__palm {
+    height: 80px;
   }
 }

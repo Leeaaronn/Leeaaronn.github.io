@@ -203,11 +203,10 @@ export function initGlobe() {
 /**
  * Update globe based on scroll state — progressive zoom toward LA.
  *
- * Section 0 (hero):       Full Earth from space (z=5)
- * Section 1 (about):      North America visible (z=4.2 → 3.5)
- * Sections 2-5 (projects): Zooming closer to LA (z=3.5 → 2.0)
- * Section 6 (skills):     Very close to LA coast (z=2.0 → 1.8)
- * Section 7 (contact):    Globe fades out completely
+ * 3-section site: Hero → About → LA Scene
+ * Section 0 (hero):     Full Earth from space (z=5)
+ * Section 1 (about):    Zoom toward North America / LA (z=5 → 2.8)
+ * Section 2 (la-scene): Globe fades out, LA skyline takes over
  *
  * @param {{ activeSection: string, progress: number, sectionIndex: number }} scrollState
  */
@@ -220,49 +219,43 @@ export function updateGlobe({ activeSection, progress, sectionIndex }) {
 
   const canvas = renderer.domElement;
 
-  // Camera z targets per section — progressive zoom toward LA
-  // index:  0     1     2     3     4     5     6     7
-  const zStops = [5.0, 4.2, 3.5, 3.1, 2.7, 2.3, 2.0, 1.8];
+  if (activeSection === 'hero') {
+    // Full Earth from space — slowly spinning, centered
+    camera.position.z += (CAMERA_Z_DEFAULT - camera.position.z) * 0.12;
+    canvas.style.opacity = '1';
+    globeGroup.position.x += (0 - globeGroup.position.x) * 0.08;
+    globeGroup.position.y += (0 - globeGroup.position.y) * 0.08;
+    if (laLabelEl) laLabelEl.classList.remove('visible');
 
-  // Globe position offset — gradually shift to center LA as we zoom
-  const xStops = [0, -0.1, -0.2, -0.25, -0.3, -0.35, -0.4, -0.4];
-  const yStops = [0, 0.1, 0.15, 0.18, 0.2, 0.22, 0.25, 0.25];
+  } else if (activeSection === 'about') {
+    // Progressive zoom from space to close-up of LA
+    // Camera z: 5 → 2.8 across the section
+    const targetZ = CAMERA_Z_DEFAULT - (progress * 2.2);
+    camera.position.z += (targetZ - camera.position.z) * 0.12;
+    canvas.style.opacity = '1';
 
-  // Contact section (index 7) — globe gone
-  if (sectionIndex >= 7) {
-    const fadeProgress = Math.min(progress / 0.3, 1);
+    // Pan toward LA as we zoom
+    const targetX = -0.4 * progress;
+    const targetY = 0.25 * progress;
+    globeGroup.position.x += (targetX - globeGroup.position.x) * 0.08;
+    globeGroup.position.y += (targetY - globeGroup.position.y) * 0.08;
+
+    // Show LA label once zoomed past 30%
+    if (laLabelEl) {
+      if (progress > 0.3) {
+        laLabelEl.classList.add('visible');
+      } else {
+        laLabelEl.classList.remove('visible');
+      }
+    }
+
+  } else {
+    // LA Scene — globe fades out as the LA skyline appears
+    const fadeProgress = Math.min(progress / 0.25, 1);
     canvas.style.opacity = String(1 - fadeProgress);
     if (laLabelEl) laLabelEl.classList.remove('visible');
     if (parseFloat(canvas.style.opacity) <= 0.01) {
       canvas.style.opacity = '0';
-    }
-    return;
-  }
-
-  // Globe visible for sections 0-6
-  canvas.style.opacity = '1';
-
-  // Interpolate between current section stop and next section stop
-  const idx = Math.max(0, Math.min(sectionIndex, zStops.length - 2));
-  const nextIdx = idx + 1;
-
-  const targetZ = zStops[idx] + (zStops[nextIdx] - zStops[idx]) * progress;
-  const targetX = xStops[idx] + (xStops[nextIdx] - xStops[idx]) * progress;
-  const targetY = yStops[idx] + (yStops[nextIdx] - yStops[idx]) * progress;
-
-  // Smooth lerp for camera z
-  camera.position.z += (targetZ - camera.position.z) * 0.12;
-
-  // Smooth lerp for globe position (panning toward LA)
-  globeGroup.position.x += (targetX - globeGroup.position.x) * 0.08;
-  globeGroup.position.y += (targetY - globeGroup.position.y) * 0.08;
-
-  // LA label — show from about section onward (index >= 1, past 30% progress)
-  if (laLabelEl) {
-    if (sectionIndex >= 2 || (sectionIndex === 1 && progress > 0.3)) {
-      laLabelEl.classList.add('visible');
-    } else {
-      laLabelEl.classList.remove('visible');
     }
   }
 }

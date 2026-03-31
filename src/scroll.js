@@ -76,21 +76,26 @@ export function initScroll({ onScroll } = {}) {
     });
   });
 
-  // About section fade-up trigger (ABOU-06)
-  const aboutSection = document.getElementById('about');
-  if (aboutSection) {
-    const aboutObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            aboutSection.classList.add('about-visible');
+  // Section fade-up triggers
+  const fadeObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target.id === 'about') {
+            entry.target.classList.add('about-visible');
+          } else if (entry.target.id === 'la-scene') {
+            entry.target.classList.add('la-scene-visible');
           }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    aboutObserver.observe(aboutSection);
-  }
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  const aboutSection = document.getElementById('about');
+  const laSceneSection = document.getElementById('la-scene');
+  if (aboutSection) fadeObserver.observe(aboutSection);
+  if (laSceneSection) fadeObserver.observe(laSceneSection);
 
   // Single scroll listener on body (body is the scroll-snap container)
   document.body.addEventListener('scroll', onScrollEvent, { passive: true });
