@@ -31,7 +31,7 @@ Five phases build the portfolio from zero to a shippable hero + about site. Phas
 **Plans**: 2 plans
 Plans:
 - [x] 01-01-PLAN.md — Vite scaffold: package.json, vite.config.js, src/ entry point and module stubs
-- [ ] 01-02-PLAN.md — HTML shell, CSS design system, CLAUDE.md conventions
+- [x] 01-02-PLAN.md — HTML shell, CSS design system, CLAUDE.md conventions
 **UI hint**: yes
 
 ### Phase 2: Canvas Layer
