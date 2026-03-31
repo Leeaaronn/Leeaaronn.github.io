@@ -26,10 +26,10 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### Globe
 
-- [ ] **GLOB-01**: Three.js 3D Earth with real NASA Blue Marble texture from CDN
-- [ ] **GLOB-02**: Atmospheric glow rim light in #60a5fa around the sphere
-- [ ] **GLOB-03**: Pulsing light blue marker on Los Angeles (34.05N, 118.25W)
-- [ ] **GLOB-04**: Smooth slow Y-axis rotation
+- [x] **GLOB-01**: Three.js 3D Earth with real NASA Blue Marble texture from CDN
+- [x] **GLOB-02**: Atmospheric glow rim light in #60a5fa around the sphere
+- [x] **GLOB-03**: Pulsing light blue marker on Los Angeles (34.05N, 118.25W)
+- [x] **GLOB-04**: Smooth slow Y-axis rotation
 - [ ] **GLOB-05**: Hero state: globe centered, full opacity, slowly spinning
 - [ ] **GLOB-06**: About state: globe zooms in, rotates to center LA, "Los Angeles, CA" label appears
 - [ ] **GLOB-07**: Past about: globe fades out smoothly, stars remain visible
@@ -67,7 +67,7 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 ### Responsive
 
 - [ ] **RESP-01**: Mobile layout: portrait stacks above text in about section
-- [ ] **RESP-02**: Globe simplifies or reduces on mobile (cap devicePixelRatio at 2)
+- [x] **RESP-02**: Globe simplifies or reduces on mobile (cap devicePixelRatio at 2)
 - [x] **RESP-03**: Sections use min-height: 100svh for mobile address bar compatibility
 
 ## v2 Requirements
@@ -127,14 +127,14 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | RESP-03 | Phase 1 (Foundation) | Complete |
 | STAR-01 | Phase 2 (Canvas Layer) | Pending |
 | STAR-02 | Phase 2 (Canvas Layer) | Pending |
-| GLOB-01 | Phase 2 (Canvas Layer) | Pending |
-| GLOB-02 | Phase 2 (Canvas Layer) | Pending |
-| GLOB-03 | Phase 2 (Canvas Layer) | Pending |
-| GLOB-04 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-01 | Phase 2 (Canvas Layer) | Complete |
+| GLOB-02 | Phase 2 (Canvas Layer) | Complete |
+| GLOB-03 | Phase 2 (Canvas Layer) | Complete |
+| GLOB-04 | Phase 2 (Canvas Layer) | Complete |
 | GLOB-05 | Phase 2 (Canvas Layer) | Pending |
 | GLOB-06 | Phase 2 (Canvas Layer) | Pending |
 | GLOB-07 | Phase 2 (Canvas Layer) | Pending |
-| RESP-02 | Phase 2 (Canvas Layer) | Pending |
+| RESP-02 | Phase 2 (Canvas Layer) | Complete |
 | SCRL-01 | Phase 3 (Scroll Shell) | Pending |
 | SCRL-02 | Phase 3 (Scroll Shell) | Pending |
 | SCRL-03 | Phase 3 (Scroll Shell) | Pending |

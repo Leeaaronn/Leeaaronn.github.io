@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 01-foundation/01-02-PLAN.md
-last_updated: "2026-03-31T19:48:36.821Z"
+status: executing
+stopped_at: Completed 02-canvas-layer/02-01-PLAN.md
+last_updated: "2026-03-31T20:57:09.481Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 2
-  completed_plans: 2
+  total_plans: 5
+  completed_plans: 4
   percent: 0
 ---
 
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** A polished, visually striking portfolio that makes hiring managers remember Aaron Lee — the 3D globe signals technical craft beyond a typical resume site.
-**Current focus:** Phase 01 — foundation
+**Current focus:** Phase 02 — canvas-layer
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
-Status: Phase complete — ready for verification
+Phase: 02 (canvas-layer) — EXECUTING
+Plan: 3 of 3
+Status: Ready to execute
 Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
@@ -54,6 +54,8 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 10 | 2 tasks | 10 files |
 | Phase 01-foundation P02 | 1 | 3 tasks | 3 files |
+| Phase 02-canvas-layer P02 | 6 | 1 tasks | 2 files |
+| Phase 02-canvas-layer P01 | 1 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -69,6 +71,10 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: Stub modules export no-op functions — initGlobe/initStars/initScroll not called in main.js until their phases
 - [Phase 01-foundation]: Body is the scroll-snap container (scroll-snap-type y mandatory on body), not the .scroll-container element
 - [Phase 01-foundation]: RESP-03: both body height and .section min-height declare 100svh so mobile address bar is accounted for at every level
+- [Phase 02-canvas-layer]: Globe atmosphere uses ShaderMaterial BackSide+AdditiveBlending for physically believable #60a5fa rim glow
+- [Phase 02-canvas-layer]: CAMERA_Z_DEFAULT=5 declared at module scope in globe.js so Plan 03 scroll handler can reference it without tight coupling
+- [Phase 02-canvas-layer]: alpha:true + no setClearColor makes canvas transparent; black background from body CSS
+- [Phase 02-canvas-layer]: initStars() called on DOMContentLoaded so body exists before canvas append
 
 ### Pending Todos
 
@@ -82,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T19:45:04.447Z
-Stopped at: Completed 01-foundation/01-02-PLAN.md
+Last session: 2026-03-31T20:57:09.479Z
+Stopped at: Completed 02-canvas-layer/02-01-PLAN.md
 Resume file: None
