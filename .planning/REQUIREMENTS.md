@@ -10,14 +10,14 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 ### Scaffold
 
 - [x] **SCAF-01**: Vite project initialized with vanilla JS template, package.json, vite.config.js (base: '/')
-- [ ] **SCAF-02**: CLAUDE.md with project rules, color palette, font sizes, asset paths, commands
-- [ ] **SCAF-03**: index.html with Google Fonts preconnect, 8 scroll-snap sections, meta tags
+- [x] **SCAF-02**: CLAUDE.md with project rules, color palette, font sizes, asset paths, commands
+- [x] **SCAF-03**: index.html with Google Fonts preconnect, 8 scroll-snap sections, meta tags
 
 ### Styles
 
-- [ ] **STYL-01**: CSS custom properties for colors (#000, #0a0a0a, #111, #1a1a1a, #fff, #ccc, #999, #60a5fa)
-- [ ] **STYL-02**: Font stack loaded (Instrument Serif, Syne, JetBrains Mono) with minimum 16px body
-- [ ] **STYL-03**: CSS reset and base styles for dark theme
+- [x] **STYL-01**: CSS custom properties for colors (#000, #0a0a0a, #111, #1a1a1a, #fff, #ccc, #999, #60a5fa)
+- [x] **STYL-02**: Font stack loaded (Instrument Serif, Syne, JetBrains Mono) with minimum 16px body
+- [x] **STYL-03**: CSS reset and base styles for dark theme
 
 ### Stars
 
@@ -68,7 +68,7 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 - [ ] **RESP-01**: Mobile layout: portrait stacks above text in about section
 - [ ] **RESP-02**: Globe simplifies or reduces on mobile (cap devicePixelRatio at 2)
-- [ ] **RESP-03**: Sections use min-height: 100svh for mobile address bar compatibility
+- [x] **RESP-03**: Sections use min-height: 100svh for mobile address bar compatibility
 
 ## v2 Requirements
 
@@ -119,12 +119,12 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | Requirement | GSD Phase | Status |
 |-------------|-----------|--------|
 | SCAF-01 | Phase 1 (Foundation) | Complete |
-| SCAF-02 | Phase 1 (Foundation) | Pending |
-| SCAF-03 | Phase 1 (Foundation) | Pending |
-| STYL-01 | Phase 1 (Foundation) | Pending |
-| STYL-02 | Phase 1 (Foundation) | Pending |
-| STYL-03 | Phase 1 (Foundation) | Pending |
-| RESP-03 | Phase 1 (Foundation) | Pending |
+| SCAF-02 | Phase 1 (Foundation) | Complete |
+| SCAF-03 | Phase 1 (Foundation) | Complete |
+| STYL-01 | Phase 1 (Foundation) | Complete |
+| STYL-02 | Phase 1 (Foundation) | Complete |
+| STYL-03 | Phase 1 (Foundation) | Complete |
+| RESP-03 | Phase 1 (Foundation) | Complete |
 | STAR-01 | Phase 2 (Canvas Layer) | Pending |
 | STAR-02 | Phase 2 (Canvas Layer) | Pending |
 | GLOB-01 | Phase 2 (Canvas Layer) | Pending |
