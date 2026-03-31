@@ -21,9 +21,9 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 
 - [x] Scroll-snap container (y mandatory), progress bar, dot navigation, section detection — Validated in Phase 3: Scroll Shell
 - [x] Floating nav bar: "AARON LEE" left, section links + Resume right, semi-transparent backdrop-blur — Validated in Phase 3: Scroll Shell
+- [x] Hero section: eyebrow text, title ("Data that tells the real story"), subtitle, CTA buttons (GitHub, LinkedIn, Email), scroll indicator, staggered load animation — Validated in Phase 4: Hero Section
 
 ### Active
-- [ ] Hero section: eyebrow text, title ("Data that tells the real story"), subtitle, CTA buttons (GitHub, LinkedIn, Email), scroll indicator, staggered load animation
 - [ ] About section: portrait (./assets/portrait.jpg), bio, stats row, detail chips, resume download, fade-up animation on snap
 - [ ] 6 placeholder sections for scroll system (Projects x4, Skills, Contact)
 - [ ] Mobile responsive layout (globe simplifies, portrait stacks above text)
@@ -87,6 +87,7 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 | Real Earth texture over procedural | Previous prototype with procedural looked fake | Validated (Phase 2) |
 | Fixed star field canvas | Must persist across all sections as site background | Validated (Phase 2) |
 | 8 sections with 6 placeholders | Scroll system needs all sections to work; content comes in Phase 2 | -- Pending |
+| Hero content with staggered animation | CSS @keyframes for load animation; 5-stage delay sequence | Validated (Phase 4) |
 
 ## Evolution
 
@@ -106,4 +107,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after Phase 3 completion*
+*Last updated: 2026-03-31 after Phase 4 completion*
