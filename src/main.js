@@ -3,6 +3,9 @@ import { initGlobe } from './globe.js'
 import { initStars } from './stars.js'
 import { initScroll } from './scroll.js'
 
-// Phase 2: initialize globe and stars when DOM is ready
-// Phase 3: initialize scroll behavior
-// Stubs export no-op functions until their phases are implemented
+// Initialize canvas layers and scroll behavior when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initStars();   // Phase 2: persistent star field background
+  initGlobe();   // Phase 2: Three.js Earth globe
+  initScroll();  // Phase 3: scroll detection, dot nav, progress bar
+});
