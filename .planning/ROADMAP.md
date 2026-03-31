@@ -48,7 +48,7 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Star field: Three.js Points geometry with drift animation on fixed canvas
 - [x] 02-02-PLAN.md — Globe: NASA Blue Marble texture, atmosphere glow, pulsing LA marker, Y rotation
-- [ ] 02-03-PLAN.md — Globe scroll behavior + main.js wiring (hero/about/fade states)
+- [x] 02-03-PLAN.md — Globe scroll behavior + main.js wiring (hero/about/fade states)
 **UI hint**: yes
 
 ### Phase 3: Scroll Shell
