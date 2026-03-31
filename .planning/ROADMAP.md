@@ -44,7 +44,11 @@ Plans:
   3. The globe is centered on the hero section, shifts and zooms toward LA on the about section, and fades out on all subsequent sections while stars remain
   4. The pulsing light blue LA marker pulses visibly at the correct location on the globe
   5. On a mid-range mobile device, globe animation maintains smooth playback (device pixel ratio capped at 2)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 02-01-PLAN.md — Star field: Three.js Points geometry with drift animation on fixed canvas
+- [ ] 02-02-PLAN.md — Globe: NASA Blue Marble texture, atmosphere glow, pulsing LA marker, Y rotation
+- [ ] 02-03-PLAN.md — Globe scroll behavior + main.js wiring (hero/about/fade states)
 **UI hint**: yes
 
 ### Phase 3: Scroll Shell
@@ -92,8 +96,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 1/2 | In Progress|  |
-| 2. Canvas Layer | 0/? | Not started | - |
+| 1. Foundation | 2/2 | Complete |  |
+| 2. Canvas Layer | 0/3 | Planned | - |
 | 3. Scroll Shell | 0/? | Not started | - |
 | 4. Hero Section | 0/? | Not started | - |
 | 5. About Section | 0/? | Not started | - |
