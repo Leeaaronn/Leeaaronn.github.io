@@ -453,3 +453,212 @@ body {
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   Section 10 — About Section
+   ========================================================================== */
+
+/* --- About Layout (two-column) --- */
+.about__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-16);
+  max-width: 1000px;
+  padding: 0 var(--space-8);
+  width: 100%;
+}
+
+/* --- Fade-up animation (ABOU-06) --- */
+@keyframes about-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#about .about__content {
+  opacity: 0;
+  transition: none;
+}
+
+#about.about-visible .about__content {
+  animation: about-fade-up 0.8s ease-out forwards;
+}
+
+/* --- Portrait (ABOU-01) --- */
+.about__portrait-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.about__portrait {
+  width: 300px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-base);
+}
+
+.about__portrait:hover {
+  transform: scale(1.04);
+}
+
+.about__portrait-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* --- Heading (ABOU-02) --- */
+.about__heading {
+  font-family: var(--font-display);
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-white);
+  margin-bottom: var(--space-6);
+}
+
+.about__name {
+  color: var(--accent);
+}
+
+/* --- Bio paragraphs --- */
+.about__bio {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: #aaaaaa;
+  line-height: 1.7;
+  margin-bottom: var(--space-4);
+}
+
+/* --- Stats Row (ABOU-03) --- */
+.about__stats {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+  padding: var(--space-6) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.about__stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.about__stat-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--color-grey-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* --- Detail Chips (ABOU-04) --- */
+.about__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+}
+
+.about__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-dark-2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  padding: 6px 14px;
+}
+
+.about__chip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.about__chip-value {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--color-grey-1);
+}
+
+/* --- Resume Button (ABOU-05) --- */
+.about__resume-btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 14px 28px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.about__resume-btn:hover {
+  background: var(--accent);
+  color: var(--color-black);
+}
+
+/* --- About Mobile (RESP-01) --- */
+@media (max-width: 768px) {
+  .about__content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-8);
+    padding: 0 var(--space-4);
+  }
+
+  .about__portrait {
+    width: 240px;
+  }
+
+  .about__stats {
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: center;
+  }
+
+  .about__stat {
+    align-items: center;
+  }
+
+  .about__chips {
+    justify-content: center;
+  }
+
+  .about__resume-btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+}
