@@ -30,7 +30,7 @@ Five phases build the portfolio from zero to a shippable hero + about site. Phas
   5. CLAUDE.md exists and documents color palette, font sizes, asset paths, and dev commands
 **Plans**: 2 plans
 Plans:
-- [ ] 01-01-PLAN.md — Vite scaffold: package.json, vite.config.js, src/ entry point and module stubs
+- [x] 01-01-PLAN.md — Vite scaffold: package.json, vite.config.js, src/ entry point and module stubs
 - [ ] 01-02-PLAN.md — HTML shell, CSS design system, CLAUDE.md conventions
 **UI hint**: yes
 
@@ -92,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/2 | Not started | - |
+| 1. Foundation | 1/2 | In Progress|  |
 | 2. Canvas Layer | 0/? | Not started | - |
 | 3. Scroll Shell | 0/? | Not started | - |
 | 4. Hero Section | 0/? | Not started | - |

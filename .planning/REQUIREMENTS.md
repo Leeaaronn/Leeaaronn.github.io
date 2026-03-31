@@ -9,7 +9,7 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### Scaffold
 
-- [ ] **SCAF-01**: Vite project initialized with vanilla JS template, package.json, vite.config.js (base: '/')
+- [x] **SCAF-01**: Vite project initialized with vanilla JS template, package.json, vite.config.js (base: '/')
 - [ ] **SCAF-02**: CLAUDE.md with project rules, color palette, font sizes, asset paths, commands
 - [ ] **SCAF-03**: index.html with Google Fonts preconnect, 8 scroll-snap sections, meta tags
 
@@ -118,7 +118,7 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 
 | Requirement | GSD Phase | Status |
 |-------------|-----------|--------|
-| SCAF-01 | Phase 1 (Foundation) | Pending |
+| SCAF-01 | Phase 1 (Foundation) | Complete |
 | SCAF-02 | Phase 1 (Foundation) | Pending |
 | SCAF-03 | Phase 1 (Foundation) | Pending |
 | STYL-01 | Phase 1 (Foundation) | Pending |

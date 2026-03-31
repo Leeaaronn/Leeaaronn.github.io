@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Phase 1 context gathered
-last_updated: "2026-03-31T18:59:22.215Z"
-last_activity: 2026-03-31 — Roadmap created, 5 phases defined, 36/36 requirements mapped
+status: executing
+stopped_at: Completed 01-foundation/01-01-PLAN.md
+last_updated: "2026-03-31T19:40:55.665Z"
+last_activity: 2026-03-31
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 2
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** A polished, visually striking portfolio that makes hiring managers remember Aaron Lee — the 3D globe signals technical craft beyond a typical resume site.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Phase 01 — foundation
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation)
-Plan: 0 of ? in current phase
-Status: Ready to plan
-Last activity: 2026-03-31 — Roadmap created, 5 phases defined, 36/36 requirements mapped
+Phase: 01 (foundation) — EXECUTING
+Plan: 2 of 2
+Status: Ready to execute
+Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -52,6 +52,7 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01-foundation P01 | 10 | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,8 @@ Recent decisions affecting current work:
 - Roadmap: 5-phase structure derived from 36 v1 requirements at standard granularity
 - Roadmap: Globe + stars validated in Phase 2 before any section content — globe-first order per research recommendation
 - Roadmap: RESP-03 (100svh) placed in Phase 1 (CSS), RESP-02 (globe mobile) in Phase 2, RESP-01 (portrait stack) in Phase 5
+- [Phase 01-foundation]: base: '/' in vite.config.js because leeaaronn.github.io is a user page (not project page), user pages serve from root
+- [Phase 01-foundation]: Stub modules export no-op functions — initGlobe/initStars/initScroll not called in main.js until their phases
 
 ### Pending Todos
 
@@ -76,6 +79,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T18:59:22.213Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-foundation/01-CONTEXT.md
+Last session: 2026-03-31T19:40:55.662Z
+Stopped at: Completed 01-foundation/01-01-PLAN.md
+Resume file: None
