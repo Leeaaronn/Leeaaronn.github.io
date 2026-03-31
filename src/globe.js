@@ -29,6 +29,7 @@ import {
 // ── Module-scoped state (accessible to updateGlobe in Plan 03) ──────────────
 let scene, camera, renderer, earthMesh, atmosphereMesh, markerMesh, clock;
 let globeGroup;
+let laLabelEl = null;
 
 const GLOBE_RADIUS = 1.5;
 const CAMERA_Z_DEFAULT = 5; // default camera distance — used by updateGlobe in Plan 03
@@ -201,9 +202,63 @@ export function initGlobe() {
 
 /**
  * Update globe based on scroll state.
- * Stub — Plan 03 (scroll behavior) will implement the full logic.
- * Module-scoped variables (camera, globeGroup, etc.) are accessible here.
+ * Implements GLOB-05 (hero), GLOB-06 (about zoom + LA label), GLOB-07 (fade past about).
  *
- * @param {Object} scrollState  Current scroll position data from scroll.js
+ * @param {{ activeSection: string, progress: number }} scrollState
+ *   activeSection — ID of the currently visible section
+ *   progress — 0-1 float of how far through that section the user has scrolled
  */
-export function updateGlobe(scrollState) {} // eslint-disable-line no-unused-vars
+export function updateGlobe({ activeSection, progress }) {
+  if (!renderer) return; // guard if not initialized
+
+  if (!laLabelEl) {
+    laLabelEl = document.getElementById('la-label');
+  }
+
+  const canvas = renderer.domElement;
+
+  if (activeSection === 'hero') {
+    // GLOB-05: Centered, full opacity, slowly spinning (default state)
+    camera.position.z = CAMERA_Z_DEFAULT; // 5
+    canvas.style.opacity = '1';
+    globeGroup.position.set(0, 0, 0);
+
+    // Hide LA label on hero
+    if (laLabelEl) laLabelEl.classList.remove('visible');
+
+  } else if (activeSection === 'about') {
+    // GLOB-06: Zoom in toward LA, rotate globe to center LA, show label
+    // Interpolate camera z from 5 to 3.2 based on progress
+    camera.position.z = CAMERA_Z_DEFAULT - (progress * 1.8);
+    canvas.style.opacity = '1';
+
+    // Shift globe slightly left and up to create a "zoom to LA" effect
+    const targetX = -0.3 * progress;
+    const targetY = 0.2 * progress;
+    globeGroup.position.x += (targetX - globeGroup.position.x) * 0.05;
+    globeGroup.position.y += (targetY - globeGroup.position.y) * 0.05;
+
+    // GLOB-06: Show "Los Angeles, CA" label when zoomed in far enough
+    if (laLabelEl) {
+      if (progress > 0.3) {
+        laLabelEl.classList.add('visible');
+      } else {
+        laLabelEl.classList.remove('visible');
+      }
+    }
+
+  } else {
+    // GLOB-07: Past about — fade out globe, stars remain visible
+    // Quick fade: opacity goes from 1 to 0 over the first 30% of the next section
+    const fadeProgress = Math.min(progress / 0.3, 1);
+    canvas.style.opacity = String(1 - fadeProgress);
+
+    // Hide LA label when past about
+    if (laLabelEl) laLabelEl.classList.remove('visible');
+
+    // Clamp to zero to avoid sub-pixel rendering artifacts
+    if (parseFloat(canvas.style.opacity) <= 0.01) {
+      canvas.style.opacity = '0';
+    }
+  }
+}

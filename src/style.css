@@ -150,3 +150,28 @@ body {
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
 .text-accent  { color: var(--accent); }
+
+
+/* ==========================================================================
+   Section 7 — Globe Overlay (LA Label)
+   ========================================================================== */
+
+.la-label {
+  position: fixed;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.la-label.visible {
+  opacity: 1;
+}
