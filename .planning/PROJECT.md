@@ -12,13 +12,11 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Vite project scaffold with package.json, vite.config.js, index.html — Validated in Phase 1: Foundation
+- [x] CLAUDE.md with project rules and conventions — Validated in Phase 1: Foundation
+- [x] Global CSS: custom properties, Google Fonts (Instrument Serif, Syne, JetBrains Mono), reset, base styles — Validated in Phase 1: Foundation
 
 ### Active
-
-- [ ] Vite project scaffold with package.json, vite.config.js, index.html
-- [ ] CLAUDE.md with project rules and conventions
-- [ ] Global CSS: custom properties, Google Fonts (Instrument Serif, Syne, JetBrains Mono), reset, base styles
 - [ ] Persistent star field background visible on ALL sections with subtle drift animation
 - [ ] Three.js 3D Earth globe with real NASA Blue Marble texture, atmospheric glow (#60a5fa), LA marker, slow rotation
 - [ ] Globe scroll behavior: centered on hero, zooms to LA on about, fades out past about (stars remain)
@@ -82,7 +80,7 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Vite + vanilla JS over React | Portfolio is simple enough; no framework overhead needed | -- Pending |
+| Vite + vanilla JS over React | Portfolio is simple enough; no framework overhead needed | Validated (Phase 1) |
 | Three.js for globe | Industry standard for WebGL; good docs and ecosystem | -- Pending |
 | Scroll-snap over smooth scroll library | Native CSS feature, no extra dependency | -- Pending |
 | Real Earth texture over procedural | Previous prototype with procedural looked fake | -- Pending |
@@ -107,4 +105,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after initialization*
+*Last updated: 2026-03-31 after Phase 1 completion*
