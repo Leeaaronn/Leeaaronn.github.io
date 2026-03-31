@@ -15,11 +15,11 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 - [x] Vite project scaffold with package.json, vite.config.js, index.html — Validated in Phase 1: Foundation
 - [x] CLAUDE.md with project rules and conventions — Validated in Phase 1: Foundation
 - [x] Global CSS: custom properties, Google Fonts (Instrument Serif, Syne, JetBrains Mono), reset, base styles — Validated in Phase 1: Foundation
+- [x] Persistent star field background visible on ALL sections with subtle drift animation — Validated in Phase 2: Canvas Layer
+- [x] Three.js 3D Earth globe with real NASA Blue Marble texture, atmospheric glow (#60a5fa), LA marker, slow rotation — Validated in Phase 2: Canvas Layer
+- [x] Globe scroll behavior: centered on hero, zooms to LA on about, fades out past about (stars remain) — Validated in Phase 2: Canvas Layer
 
 ### Active
-- [ ] Persistent star field background visible on ALL sections with subtle drift animation
-- [ ] Three.js 3D Earth globe with real NASA Blue Marble texture, atmospheric glow (#60a5fa), LA marker, slow rotation
-- [ ] Globe scroll behavior: centered on hero, zooms to LA on about, fades out past about (stars remain)
 - [ ] Scroll-snap container (y mandatory), progress bar, dot navigation, section detection
 - [ ] Floating nav bar: "AARON LEE" left, section links + Resume right, semi-transparent backdrop-blur
 - [ ] Hero section: eyebrow text, title ("Data that tells the real story"), subtitle, CTA buttons (GitHub, LinkedIn, Email), scroll indicator, staggered load animation
@@ -81,10 +81,10 @@ A polished, visually striking portfolio that makes hiring managers and recruiter
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
 | Vite + vanilla JS over React | Portfolio is simple enough; no framework overhead needed | Validated (Phase 1) |
-| Three.js for globe | Industry standard for WebGL; good docs and ecosystem | -- Pending |
+| Three.js for globe | Industry standard for WebGL; good docs and ecosystem | Validated (Phase 2) |
 | Scroll-snap over smooth scroll library | Native CSS feature, no extra dependency | -- Pending |
-| Real Earth texture over procedural | Previous prototype with procedural looked fake | -- Pending |
-| Fixed star field canvas | Must persist across all sections as site background | -- Pending |
+| Real Earth texture over procedural | Previous prototype with procedural looked fake | Validated (Phase 2) |
+| Fixed star field canvas | Must persist across all sections as site background | Validated (Phase 2) |
 | 8 sections with 6 placeholders | Scroll system needs all sections to work; content comes in Phase 2 | -- Pending |
 
 ## Evolution
@@ -105,4 +105,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-31 after Phase 1 completion*
+*Last updated: 2026-03-31 after Phase 2 completion*
