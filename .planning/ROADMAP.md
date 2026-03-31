@@ -28,7 +28,10 @@ Five phases build the portfolio from zero to a shippable hero + about site. Phas
   3. The CSS custom property `--accent` is `#60a5fa` and no green, purple, or orange appears anywhere
   4. Body text renders at minimum 16px and sections use `min-height: 100svh`
   5. CLAUDE.md exists and documents color palette, font sizes, asset paths, and dev commands
-**Plans**: TBD
+**Plans**: 2 plans
+Plans:
+- [ ] 01-01-PLAN.md — Vite scaffold: package.json, vite.config.js, src/ entry point and module stubs
+- [ ] 01-02-PLAN.md — HTML shell, CSS design system, CLAUDE.md conventions
 **UI hint**: yes
 
 ### Phase 2: Canvas Layer
@@ -89,7 +92,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/? | Not started | - |
+| 1. Foundation | 0/2 | Not started | - |
 | 2. Canvas Layer | 0/? | Not started | - |
 | 3. Scroll Shell | 0/? | Not started | - |
 | 4. Hero Section | 0/? | Not started | - |
