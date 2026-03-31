@@ -75,7 +75,9 @@ Plans:
   2. GitHub, LinkedIn, and Email Me CTA buttons are visible and their links work correctly
   3. The scroll indicator ("Scroll to explore" with animated line) appears at the bottom of the hero
   4. All hero elements fade in with a staggered animation on page load (eyebrow, then title, then subtitle, then CTAs in sequence)
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 04-01-PLAN.md — Hero HTML content, CSS styles, staggered fade-in animation, and visual verification
 **UI hint**: yes
 
 ### Phase 5: About Section
@@ -101,5 +103,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation | 2/2 | Complete |  |
 | 2. Canvas Layer | 3/3 | Complete |  |
 | 3. Scroll Shell | 1/1 | Complete   | 2026-03-31 |
-| 4. Hero Section | 0/? | Not started | - |
+| 4. Hero Section | 0/1 | Planning complete | - |
 | 5. About Section | 0/? | Not started | - |
