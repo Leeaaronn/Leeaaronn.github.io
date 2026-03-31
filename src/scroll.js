@@ -35,7 +35,10 @@ export function initScroll({ onScroll } = {}) {
       }
     }
 
-    return { activeSection, progress: sectionProgress, overallProgress };
+    // Find section index (0-based) for progressive zoom
+    const sectionIndex = sections.findIndex(s => s.id === activeSection);
+
+    return { activeSection, progress: sectionProgress, overallProgress, sectionIndex };
   }
 
   function updateUI(state) {
@@ -58,7 +61,7 @@ export function initScroll({ onScroll } = {}) {
     const state = getScrollState();
     updateUI(state);
     if (onScroll) {
-      onScroll({ activeSection: state.activeSection, progress: state.progress });
+      onScroll({ activeSection: state.activeSection, progress: state.progress, overallProgress: state.overallProgress, sectionIndex: state.sectionIndex });
     }
   }
 

@@ -201,15 +201,18 @@ export function initGlobe() {
 }
 
 /**
- * Update globe based on scroll state.
- * Implements GLOB-05 (hero), GLOB-06 (about zoom + LA label), GLOB-07 (fade past about).
+ * Update globe based on scroll state — progressive zoom toward LA.
  *
- * @param {{ activeSection: string, progress: number }} scrollState
- *   activeSection — ID of the currently visible section
- *   progress — 0-1 float of how far through that section the user has scrolled
+ * Section 0 (hero):       Full Earth from space (z=5)
+ * Section 1 (about):      North America visible (z=4.2 → 3.5)
+ * Sections 2-5 (projects): Zooming closer to LA (z=3.5 → 2.0)
+ * Section 6 (skills):     Very close to LA coast (z=2.0 → 1.8)
+ * Section 7 (contact):    Globe fades out completely
+ *
+ * @param {{ activeSection: string, progress: number, sectionIndex: number }} scrollState
  */
-export function updateGlobe({ activeSection, progress }) {
-  if (!renderer) return; // guard if not initialized
+export function updateGlobe({ activeSection, progress, sectionIndex }) {
+  if (!renderer) return;
 
   if (!laLabelEl) {
     laLabelEl = document.getElementById('la-label');
@@ -217,48 +220,49 @@ export function updateGlobe({ activeSection, progress }) {
 
   const canvas = renderer.domElement;
 
-  if (activeSection === 'hero') {
-    // GLOB-05: Centered, full opacity, slowly spinning (default state)
-    camera.position.z = CAMERA_Z_DEFAULT; // 5
-    canvas.style.opacity = '1';
-    globeGroup.position.set(0, 0, 0);
+  // Camera z targets per section — progressive zoom toward LA
+  // index:  0     1     2     3     4     5     6     7
+  const zStops = [5.0, 4.2, 3.5, 3.1, 2.7, 2.3, 2.0, 1.8];
 
-    // Hide LA label on hero
-    if (laLabelEl) laLabelEl.classList.remove('visible');
+  // Globe position offset — gradually shift to center LA as we zoom
+  const xStops = [0, -0.1, -0.2, -0.25, -0.3, -0.35, -0.4, -0.4];
+  const yStops = [0, 0.1, 0.15, 0.18, 0.2, 0.22, 0.25, 0.25];
 
-  } else if (activeSection === 'about') {
-    // GLOB-06: Zoom in toward LA, rotate globe to center LA, show label
-    // Interpolate camera z from 5 to 3.2 based on progress
-    camera.position.z = CAMERA_Z_DEFAULT - (progress * 1.8);
-    canvas.style.opacity = '1';
-
-    // Shift globe slightly left and up to create a "zoom to LA" effect
-    const targetX = -0.3 * progress;
-    const targetY = 0.2 * progress;
-    globeGroup.position.x += (targetX - globeGroup.position.x) * 0.05;
-    globeGroup.position.y += (targetY - globeGroup.position.y) * 0.05;
-
-    // GLOB-06: Show "Los Angeles, CA" label when zoomed in far enough
-    if (laLabelEl) {
-      if (progress > 0.3) {
-        laLabelEl.classList.add('visible');
-      } else {
-        laLabelEl.classList.remove('visible');
-      }
-    }
-
-  } else {
-    // GLOB-07: Past about — fade out globe, stars remain visible
-    // Quick fade: opacity goes from 1 to 0 over the first 30% of the next section
+  // Contact section (index 7) — globe gone
+  if (sectionIndex >= 7) {
     const fadeProgress = Math.min(progress / 0.3, 1);
     canvas.style.opacity = String(1 - fadeProgress);
-
-    // Hide LA label when past about
     if (laLabelEl) laLabelEl.classList.remove('visible');
-
-    // Clamp to zero to avoid sub-pixel rendering artifacts
     if (parseFloat(canvas.style.opacity) <= 0.01) {
       canvas.style.opacity = '0';
+    }
+    return;
+  }
+
+  // Globe visible for sections 0-6
+  canvas.style.opacity = '1';
+
+  // Interpolate between current section stop and next section stop
+  const idx = Math.max(0, Math.min(sectionIndex, zStops.length - 2));
+  const nextIdx = idx + 1;
+
+  const targetZ = zStops[idx] + (zStops[nextIdx] - zStops[idx]) * progress;
+  const targetX = xStops[idx] + (xStops[nextIdx] - xStops[idx]) * progress;
+  const targetY = yStops[idx] + (yStops[nextIdx] - yStops[idx]) * progress;
+
+  // Smooth lerp for camera z
+  camera.position.z += (targetZ - camera.position.z) * 0.12;
+
+  // Smooth lerp for globe position (panning toward LA)
+  globeGroup.position.x += (targetX - globeGroup.position.x) * 0.08;
+  globeGroup.position.y += (targetY - globeGroup.position.y) * 0.08;
+
+  // LA label — show from about section onward (index >= 1, past 30% progress)
+  if (laLabelEl) {
+    if (sectionIndex >= 2 || (sectionIndex === 1 && progress > 0.3)) {
+      laLabelEl.classList.add('visible');
+    } else {
+      laLabelEl.classList.remove('visible');
     }
   }
 }
