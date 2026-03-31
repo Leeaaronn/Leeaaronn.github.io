@@ -89,13 +89,80 @@ A personal portfolio website for Aaron Lee, an entry-level Data Analyst / Data O
 <!-- GSD:conventions-start source:CONVENTIONS.md -->
 ## Conventions
 
-Conventions not yet established. Will populate as patterns emerge during development.
+### Color Palette
+| Token | Value | Use |
+|-------|-------|-----|
+| `--color-black` | `#000000` | Page background |
+| `--color-dark-1` | `#0a0a0a` | Section backgrounds |
+| `--color-dark-2` | `#111111` | Card/surface backgrounds |
+| `--color-dark-3` | `#1a1a1a` | Elevated surfaces |
+| `--color-white` | `#ffffff` | Primary text |
+| `--color-grey-1` | `#cccccc` | Secondary text |
+| `--color-grey-2` | `#999999` | Muted text, placeholders |
+| `--accent` | `#60a5fa` | Interactive, highlight, globe glow |
+
+HARD RULE: No green, purple, or orange. Ever.
+
+### Typography
+| Role | Font | Min Size | CSS Variable |
+|------|------|----------|--------------|
+| Display / hero headings | Instrument Serif | 60px (clamp) | `var(--font-display)` |
+| Body / UI text | Syne | 16px | `var(--font-body)` |
+| Code / mono detail | JetBrains Mono | 16px | `var(--font-mono)` |
+
+Body minimum: 16px. Non-negotiable.
+
+### Asset Paths
+| Asset | Path | Notes |
+|-------|------|-------|
+| Portrait photo | `./assets/portrait.jpg` | Used in Phase 5 About section |
+| Resume PDF | `./assets/resume.pdf` | Linked in nav and About section |
+| Earth texture (dev) | CDN: `https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg` | Download to `public/textures/` before prod deploy |
+| Earth bump map | CDN: `https://unpkg.com/three-globe/example/img/earth-topology.png` | Terrain relief |
+| Earth water mask | CDN: `https://unpkg.com/three-globe/example/img/earth-water.png` | Ocean specularity |
+
+### File Structure
+```
+/
+├── index.html              # HTML entry point (8 scroll-snap sections)
+├── vite.config.js          # Vite config (base: '/')
+├── package.json
+├── CLAUDE.md               # This file
+├── assets/
+│   ├── portrait.jpg        # Aaron's portrait photo
+│   └── resume.pdf          # Resume for download
+├── public/
+│   └── textures/           # Local texture fallbacks (download before prod)
+└── src/
+    ├── main.js             # Entry point — imports CSS + module inits
+    ├── style.css           # ALL styles (single file, no splitting)
+    ├── globe.js            # Three.js globe (Phase 2)
+    ├── stars.js            # Star field (Phase 2)
+    └── scroll.js           # Scroll behavior (Phase 3)
+```
+
+### Dev Commands
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start Vite dev server at http://localhost:5173 |
+| `npm run build` | Production build → dist/ |
+| `npm run preview` | Preview production build locally |
+
+### Section IDs (8 scroll-snap sections)
+`hero` → `about` → `projects-1` → `projects-2` → `projects-3` → `projects-4` → `skills` → `contact`
 <!-- GSD:conventions-end -->
 
 <!-- GSD:architecture-start source:ARCHITECTURE.md -->
 ## Architecture
 
-Architecture not yet mapped. Follow existing patterns found in the codebase.
+Single-page vanilla JS app. Vite handles bundling and dev server. No framework.
+
+- `index.html` is the root — Vite injects the module script
+- `src/main.js` is the JS entry point — imports CSS and calls init functions
+- `src/style.css` contains ALL styles via CSS custom properties (no CSS splitting)
+- Phase 2 modules (`globe.js`, `stars.js`) initialize Three.js canvas layers
+- Phase 3 module (`scroll.js`) drives scroll detection and UI updates
+- No state management library — plain JS module exports and DOM APIs only
 <!-- GSD:architecture-end -->
 
 <!-- GSD:workflow-start source:GSD defaults -->
