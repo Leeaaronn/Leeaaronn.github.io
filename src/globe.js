@@ -58,7 +58,7 @@ function latLonToVec3(lat, lon, radius) {
 
 function animate() {
   // Slow Y-axis rotation (GLOB-04)
-  globeGroup.rotation.y += 0.002;
+  globeGroup.rotation.y += 0.001;
 
   // Pulse the LA marker — emissive intensity and scale
   const elapsed = clock.getElapsedTime();
