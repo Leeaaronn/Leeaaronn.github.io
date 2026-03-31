@@ -116,50 +116,50 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 
 ## Traceability
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| SCAF-01 | Phase 1 | Pending |
-| SCAF-02 | Phase 1 | Pending |
-| SCAF-03 | Phase 1 | Pending |
-| STYL-01 | Phase 1 | Pending |
-| STYL-02 | Phase 1 | Pending |
-| STYL-03 | Phase 1 | Pending |
-| STAR-01 | Phase 1 | Pending |
-| STAR-02 | Phase 1 | Pending |
-| GLOB-01 | Phase 1 | Pending |
-| GLOB-02 | Phase 1 | Pending |
-| GLOB-03 | Phase 1 | Pending |
-| GLOB-04 | Phase 1 | Pending |
-| GLOB-05 | Phase 1 | Pending |
-| GLOB-06 | Phase 1 | Pending |
-| GLOB-07 | Phase 1 | Pending |
-| SCRL-01 | Phase 1 | Pending |
-| SCRL-02 | Phase 1 | Pending |
-| SCRL-03 | Phase 1 | Pending |
-| SCRL-04 | Phase 1 | Pending |
-| NAV-01 | Phase 1 | Pending |
-| NAV-02 | Phase 1 | Pending |
-| HERO-01 | Phase 1 | Pending |
-| HERO-02 | Phase 1 | Pending |
-| HERO-03 | Phase 1 | Pending |
-| HERO-04 | Phase 1 | Pending |
-| HERO-05 | Phase 1 | Pending |
-| HERO-06 | Phase 1 | Pending |
-| ABOU-01 | Phase 1 | Pending |
-| ABOU-02 | Phase 1 | Pending |
-| ABOU-03 | Phase 1 | Pending |
-| ABOU-04 | Phase 1 | Pending |
-| ABOU-05 | Phase 1 | Pending |
-| ABOU-06 | Phase 1 | Pending |
-| RESP-01 | Phase 1 | Pending |
-| RESP-02 | Phase 1 | Pending |
-| RESP-03 | Phase 1 | Pending |
+| Requirement | GSD Phase | Status |
+|-------------|-----------|--------|
+| SCAF-01 | Phase 1 (Foundation) | Pending |
+| SCAF-02 | Phase 1 (Foundation) | Pending |
+| SCAF-03 | Phase 1 (Foundation) | Pending |
+| STYL-01 | Phase 1 (Foundation) | Pending |
+| STYL-02 | Phase 1 (Foundation) | Pending |
+| STYL-03 | Phase 1 (Foundation) | Pending |
+| RESP-03 | Phase 1 (Foundation) | Pending |
+| STAR-01 | Phase 2 (Canvas Layer) | Pending |
+| STAR-02 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-01 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-02 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-03 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-04 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-05 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-06 | Phase 2 (Canvas Layer) | Pending |
+| GLOB-07 | Phase 2 (Canvas Layer) | Pending |
+| RESP-02 | Phase 2 (Canvas Layer) | Pending |
+| SCRL-01 | Phase 3 (Scroll Shell) | Pending |
+| SCRL-02 | Phase 3 (Scroll Shell) | Pending |
+| SCRL-03 | Phase 3 (Scroll Shell) | Pending |
+| SCRL-04 | Phase 3 (Scroll Shell) | Pending |
+| NAV-01 | Phase 3 (Scroll Shell) | Pending |
+| NAV-02 | Phase 3 (Scroll Shell) | Pending |
+| HERO-01 | Phase 4 (Hero Section) | Pending |
+| HERO-02 | Phase 4 (Hero Section) | Pending |
+| HERO-03 | Phase 4 (Hero Section) | Pending |
+| HERO-04 | Phase 4 (Hero Section) | Pending |
+| HERO-05 | Phase 4 (Hero Section) | Pending |
+| HERO-06 | Phase 4 (Hero Section) | Pending |
+| ABOU-01 | Phase 5 (About Section) | Pending |
+| ABOU-02 | Phase 5 (About Section) | Pending |
+| ABOU-03 | Phase 5 (About Section) | Pending |
+| ABOU-04 | Phase 5 (About Section) | Pending |
+| ABOU-05 | Phase 5 (About Section) | Pending |
+| ABOU-06 | Phase 5 (About Section) | Pending |
+| RESP-01 | Phase 5 (About Section) | Pending |
 
 **Coverage:**
 - v1 requirements: 36 total
-- Mapped to phases: 36
+- Mapped to GSD phases: 36
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-03-31*
-*Last updated: 2026-03-31 after initial definition*
+*Last updated: 2026-03-31 — traceability updated to 5-phase GSD roadmap*
