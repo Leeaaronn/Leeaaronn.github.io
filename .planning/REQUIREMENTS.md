@@ -57,16 +57,16 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### About
 
-- [ ] **ABOU-01**: Portrait from ./assets/portrait.jpg with rounded corners, hover scale, "Rosemead, CA" label
-- [ ] **ABOU-02**: "Hi, I'm Aaron." with name in accent color + 2-3 sentence bio
-- [ ] **ABOU-03**: Stats row: B.S. CS CSUF '25 | 4 Projects | 44 Pytest Assertions | +38.7K Riders/Day
-- [ ] **ABOU-04**: Detail chips: Education, Focus, Goal, Next Step
-- [ ] **ABOU-05**: Resume download button linking to ./assets/resume.pdf
-- [ ] **ABOU-06**: Fade-up animation when section snaps into view
+- [x] **ABOU-01**: Portrait from ./assets/portrait.jpg with rounded corners, hover scale, "Rosemead, CA" label
+- [x] **ABOU-02**: "Hi, I'm Aaron." with name in accent color + 2-3 sentence bio
+- [x] **ABOU-03**: Stats row: B.S. CS CSUF '25 | 4 Projects | 44 Pytest Assertions | +38.7K Riders/Day
+- [x] **ABOU-04**: Detail chips: Education, Focus, Goal, Next Step
+- [x] **ABOU-05**: Resume download button linking to ./assets/resume.pdf
+- [x] **ABOU-06**: Fade-up animation when section snaps into view
 
 ### Responsive
 
-- [ ] **RESP-01**: Mobile layout: portrait stacks above text in about section
+- [x] **RESP-01**: Mobile layout: portrait stacks above text in about section
 - [x] **RESP-02**: Globe simplifies or reduces on mobile (cap devicePixelRatio at 2)
 - [x] **RESP-03**: Sections use min-height: 100svh for mobile address bar compatibility
 
@@ -147,13 +147,13 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | HERO-04 | Phase 4 (Hero Section) | Complete |
 | HERO-05 | Phase 4 (Hero Section) | Complete |
 | HERO-06 | Phase 4 (Hero Section) | Complete |
-| ABOU-01 | Phase 5 (About Section) | Pending |
-| ABOU-02 | Phase 5 (About Section) | Pending |
-| ABOU-03 | Phase 5 (About Section) | Pending |
-| ABOU-04 | Phase 5 (About Section) | Pending |
-| ABOU-05 | Phase 5 (About Section) | Pending |
-| ABOU-06 | Phase 5 (About Section) | Pending |
-| RESP-01 | Phase 5 (About Section) | Pending |
+| ABOU-01 | Phase 5 (About Section) | Complete |
+| ABOU-02 | Phase 5 (About Section) | Complete |
+| ABOU-03 | Phase 5 (About Section) | Complete |
+| ABOU-04 | Phase 5 (About Section) | Complete |
+| ABOU-05 | Phase 5 (About Section) | Complete |
+| ABOU-06 | Phase 5 (About Section) | Complete |
+| RESP-01 | Phase 5 (About Section) | Complete |
 
 **Coverage:**
 - v1 requirements: 36 total

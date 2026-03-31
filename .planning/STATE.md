@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 04-01-PLAN.md — Phase 4 hero section complete
-last_updated: "2026-03-31T22:19:55.593Z"
+stopped_at: "Task 4 checkpoint: visual verification of about section — awaiting human confirm at http://localhost:5173"
+last_updated: "2026-03-31T23:11:26.110Z"
 last_activity: 2026-03-31
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
+  completed_phases: 5
+  total_plans: 8
+  completed_plans: 8
   percent: 0
 ---
 
@@ -21,12 +21,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-31)
 
 **Core value:** A polished, visually striking portfolio that makes hiring managers remember Aaron Lee — the 3D globe signals technical craft beyond a typical resume site.
-**Current focus:** Phase 04 — hero-section
+**Current focus:** Phase 05 — about-section
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (about-section) — EXECUTING
+Plan: 1 of 1
 Status: Phase complete — ready for verification
 Last activity: 2026-03-31
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 02-canvas-layer P02 | 6 | 1 tasks | 2 files |
 | Phase 02-canvas-layer P01 | 1 | 1 tasks | 2 files |
 | Phase 04 P01 | 20 | 3 tasks | 2 files |
+| Phase 05-about-section P01 | 15 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 03-scroll-shell]: Single passive body scroll listener in scroll.js drives both UI (progress bar, dot nav) and globe — no duplicate listeners
 - [Phase 04]: Title font-size uses clamp(52px, 9vw, 120px) per CONTEXT.md spec, overriding --text-hero token
 - [Phase 04]: hero__content z-index: 10 layers hero text above Three.js globe canvas
+- [Phase 05-about-section]: Bio font-size set to 16px (CLAUDE.md minimum enforced over 15px mentioned in plan notes)
+- [Phase 05-about-section]: about-visible class toggle pattern: IntersectionObserver adds class once to section, CSS cascade animates child — clean JS/CSS separation
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-31T22:13:33.978Z
-Stopped at: Completed 04-01-PLAN.md — Phase 4 hero section complete
+Last session: 2026-03-31T23:11:26.107Z
+Stopped at: Task 4 checkpoint: visual verification of about section — awaiting human confirm at http://localhost:5173
 Resume file: None

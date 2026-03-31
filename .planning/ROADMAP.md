@@ -14,7 +14,7 @@ Five phases build the portfolio from zero to a shippable hero + about site. Phas
 - [ ] **Phase 2: Canvas Layer** - Three.js globe (NASA texture, atmosphere, LA marker, scroll behavior) and star field
 - [x] **Phase 3: Scroll Shell** - Scroll-snap container, progress bar, dot nav, floating nav bar (completed 2026-03-31)
 - [ ] **Phase 4: Hero Section** - Hero content, CTA buttons, scroll indicator, staggered load animation
-- [ ] **Phase 5: About Section** - Portrait, bio, stats, chips, resume download, mobile responsive layout
+- [x] **Phase 5: About Section** - Portrait, bio, stats, chips, resume download, mobile responsive layout (completed 2026-03-31)
 
 ## Phase Details
 
@@ -104,4 +104,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Canvas Layer | 3/3 | Complete |  |
 | 3. Scroll Shell | 1/1 | Complete   | 2026-03-31 |
 | 4. Hero Section | 0/1 | Planning complete | - |
-| 5. About Section | 0/? | Not started | - |
+| 5. About Section | 1/1 | Complete   | 2026-03-31 |
