@@ -324,7 +324,7 @@ body {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 4px;
-  color: var(--color-grey-2);
+  color: #d0d0d0;
   margin-bottom: var(--space-6);
 }
 
@@ -382,7 +382,7 @@ body {
 /* --- Scroll Indicator (HERO-05) --- */
 .hero__scroll-cue {
   position: absolute;
-  bottom: var(--space-6);
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

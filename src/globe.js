@@ -58,7 +58,7 @@ function latLonToVec3(lat, lon, radius) {
 
 function animate() {
   // Slow Y-axis rotation (GLOB-04)
-  globeGroup.rotation.y += 0.001;
+  globeGroup.rotation.y += 0.0005;
 
   // Pulse the LA marker — emissive intensity and scale
   const elapsed = clock.getElapsedTime();
@@ -177,8 +177,8 @@ export function initGlobe() {
 
   const markerGeometry = new SphereGeometry(0.03, 16, 16);
   const markerMaterial = new MeshPhongMaterial({
-    color: 0x60a5fa,
-    emissive: 0x60a5fa,
+    color: 0xef4444,
+    emissive: 0xef4444,
     emissiveIntensity: 0.8,
     transparent: true,
   });
