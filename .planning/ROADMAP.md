@@ -77,7 +77,7 @@ Plans:
   4. All hero elements fade in with a staggered animation on page load (eyebrow, then title, then subtitle, then CTAs in sequence)
 **Plans**: 1 plan
 Plans:
-- [ ] 04-01-PLAN.md — Hero HTML content, CSS styles, staggered fade-in animation, and visual verification
+- [x] 04-01-PLAN.md — Hero HTML content, CSS styles, staggered fade-in animation, and visual verification
 **UI hint**: yes
 
 ### Phase 5: About Section

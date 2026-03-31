@@ -48,12 +48,12 @@ Requirements for Phase 1 (foundation, globe, hero, about).
 
 ### Hero
 
-- [ ] **HERO-01**: Eyebrow text "Data Analyst · Los Angeles, CA" in mono font
-- [ ] **HERO-02**: Title "Data that tells the real story" with "real story" in italic accent color
-- [ ] **HERO-03**: Subtitle (1-2 sentences about what Aaron does)
-- [ ] **HERO-04**: CTA buttons: GitHub, LinkedIn, Email Me
-- [ ] **HERO-05**: Scroll indicator at bottom ("Scroll to explore" + animated line)
-- [ ] **HERO-06**: Staggered fade-in animation on load
+- [x] **HERO-01**: Eyebrow text "Data Analyst · Los Angeles, CA" in mono font
+- [x] **HERO-02**: Title "Data that tells the real story" with "real story" in italic accent color
+- [x] **HERO-03**: Subtitle (1-2 sentences about what Aaron does)
+- [x] **HERO-04**: CTA buttons: GitHub, LinkedIn, Email Me
+- [x] **HERO-05**: Scroll indicator at bottom ("Scroll to explore" + animated line)
+- [x] **HERO-06**: Staggered fade-in animation on load
 
 ### About
 
@@ -141,12 +141,12 @@ Deferred to Phase 2. Tracked but not in current roadmap.
 | SCRL-04 | Phase 3 (Scroll Shell) | Complete |
 | NAV-01 | Phase 3 (Scroll Shell) | Complete |
 | NAV-02 | Phase 3 (Scroll Shell) | Complete |
-| HERO-01 | Phase 4 (Hero Section) | Pending |
-| HERO-02 | Phase 4 (Hero Section) | Pending |
-| HERO-03 | Phase 4 (Hero Section) | Pending |
-| HERO-04 | Phase 4 (Hero Section) | Pending |
-| HERO-05 | Phase 4 (Hero Section) | Pending |
-| HERO-06 | Phase 4 (Hero Section) | Pending |
+| HERO-01 | Phase 4 (Hero Section) | Complete |
+| HERO-02 | Phase 4 (Hero Section) | Complete |
+| HERO-03 | Phase 4 (Hero Section) | Complete |
+| HERO-04 | Phase 4 (Hero Section) | Complete |
+| HERO-05 | Phase 4 (Hero Section) | Complete |
+| HERO-06 | Phase 4 (Hero Section) | Complete |
 | ABOU-01 | Phase 5 (About Section) | Pending |
 | ABOU-02 | Phase 5 (About Section) | Pending |
 | ABOU-03 | Phase 5 (About Section) | Pending |
