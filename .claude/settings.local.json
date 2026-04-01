@@ -19,7 +19,13 @@
       "Bash(grep:*)",
       "Bash(cd:*)",
       "Bash(ls:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(mkdir -p public/assets/audio public/assets/gifs)",
+      "Bash(cp assets/resume.pdf public/assets/resume.pdf)",
+      "Bash(cp assets/audio/alien.mp3 public/assets/audio/alien.mp3)",
+      "Bash(cp assets/audio/astronaut.mp3 public/assets/audio/astronaut.mp3)",
+      "Bash(gh run:*)",
+      "Bash(git push:*)"
     ]
   }
 }
