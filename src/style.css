@@ -239,14 +239,7 @@ body {
   50% { opacity: 0.4; }
 }
 
-@media (max-width: 768px) {
-  .loading-screen__alien {
-    width: 180px;
-  }
-  .loading-screen__bar-track {
-    width: 220px;
-  }
-}
+/* loading screen mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -380,22 +373,7 @@ body {
   border-color: var(--color-white);
 }
 
-/* --- Mobile: show only logo + Resume link --- */
-@media (max-width: 768px) {
-  .nav-bar__link:not(.nav-bar__link--resume) {
-    display: none;
-  }
-  .nav-bar {
-    padding: var(--space-3) var(--space-4);
-  }
-  .dot-nav {
-    right: var(--space-3);
-  }
-  .dot-nav__dot {
-    width: 8px;
-    height: 8px;
-  }
-}
+/* nav mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -501,33 +479,7 @@ body {
 .hero--visible .hero__subtitle   { animation-delay: 0.6s; }
 .hero--visible .hero__ctas       { animation-delay: 0.8s; }
 
-/* --- Hero Mobile --- */
-@media (max-width: 768px) {
-  .hero__content {
-    padding: 0 24px;
-  }
-  .hero__eyebrow {
-    font-size: 10px;
-    letter-spacing: 3px;
-  }
-  .hero__title {
-    font-size: clamp(36px, 10vw, 44px);
-  }
-  .hero__subtitle {
-    font-size: 15px;
-    margin-bottom: var(--space-8);
-  }
-  .hero__ctas {
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero__cta {
-    width: 100%;
-    max-width: 280px;
-    text-align: center;
-    padding: 10px 20px;
-  }
-}
+/* hero mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -695,83 +647,7 @@ body {
   color: var(--color-black);
 }
 
-/* --- About Mobile --- */
-@media (max-width: 768px) {
-  .about__content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0;
-    padding: 40px 24px;
-    overflow-y: auto;
-    max-width: 100%;
-  }
-
-  .about__portrait-wrap {
-    display: none;
-  }
-
-  .about__heading {
-    font-size: 32px;
-    margin-bottom: var(--space-3);
-  }
-
-  .about__bio {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: var(--space-3);
-  }
-
-  .about__stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    justify-items: center;
-    text-align: center;
-    margin-top: var(--space-4);
-    margin-bottom: var(--space-4);
-    padding: var(--space-4) 0;
-  }
-
-  .about__stat {
-    align-items: center;
-  }
-
-  .about__stat-value {
-    font-size: 20px;
-  }
-
-  .about__stat-label {
-    font-size: 9px;
-  }
-
-  .about__chips {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: var(--space-4);
-  }
-
-  .about__chip {
-    padding: 4px 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .about__chip-label {
-    font-size: 9px;
-  }
-
-  .about__chip-value {
-    font-size: 10px;
-  }
-
-  .about__resume-btn {
-    width: 100%;
-    max-width: 280px;
-    text-align: center;
-    padding: 12px 20px;
-  }
-}
+/* about mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -911,53 +787,7 @@ body {
   color: var(--color-grey-2);
 }
 
-/* --- LA Scene Mobile --- */
-@media (max-width: 768px) {
-  .la-scene__content {
-    padding: var(--space-8) 24px var(--space-4);
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: 0;
-  }
-
-  .la-scene__tagline {
-    font-size: 10px;
-    letter-spacing: 2px;
-  }
-
-  .la-scene__heading {
-    font-size: 32px;
-    margin-bottom: var(--space-6);
-  }
-
-  .la-scene__grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-  }
-
-  .la-scene__card {
-    max-width: 90vw;
-  }
-
-  .la-scene__card-title {
-    font-size: 13px;
-  }
-
-  .la-scene__contact {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .la-scene__contact .hero__cta {
-    width: 100%;
-    max-width: 280px;
-    text-align: center;
-    padding: 10px 20px;
-  }
-
-  .la-scene__footer {
-    font-size: 10px;
-  }
-}
+/* la-scene mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -1043,11 +873,7 @@ body {
   border: none;
 }
 
-@media (max-width: 768px) {
-  .volume-pill {
-    display: none;
-  }
-}
+/* volume pill mobile — see consolidated block at end of file */
 
 
 /* ==========================================================================
@@ -1081,17 +907,64 @@ body {
   50%      { margin-top: -10px; }
 }
 
+/* ufo mobile — see consolidated block at end of file */
+
+
+/* ==========================================================================
+   MOBILE OVERHAUL — single consolidated block at end for max specificity
+   ========================================================================== */
+
 @media (max-width: 768px) {
-  .ufo {
-    display: none;
-  }
-  @keyframes ufo-orbit {
-    0%   { transform: translate(calc(-50% + 100px), calc(-50% + 0px))   scale(1);    }
-    25%  { transform: translate(calc(-50% + 0px),   calc(-50% - 50px))  scale(0.75); }
-    50%  { transform: translate(calc(-50% - 100px), calc(-50% + 0px))   scale(0.55); }
-    75%  { transform: translate(calc(-50% + 0px),   calc(-50% + 50px))  scale(0.75); }
-    100% { transform: translate(calc(-50% + 100px), calc(-50% + 0px))   scale(1);    }
-  }
+  /* --- Loading Screen --- */
+  .loading-screen__alien { width: 180px; }
+  .loading-screen__bar-track { width: 220px; }
+
+  /* --- Nav: logo + Resume only --- */
+  .nav-bar { padding: var(--space-3) var(--space-4); }
+  .nav-bar__link:not(.nav-bar__link--resume) { display: none; }
+
+  /* --- Dot Nav --- */
+  .dot-nav { right: 12px; }
+  .dot-nav__dot { width: 6px; height: 6px; }
+
+  /* --- Hero --- */
+  .hero__content { padding: 0 24px; }
+  .hero__title { font-size: 36px; letter-spacing: -1px; }
+  .hero__subtitle { font-size: 14px; margin-bottom: var(--space-8); }
+  .hero__eyebrow { font-size: 10px; letter-spacing: 2px; }
+  .hero__ctas { flex-direction: column; gap: 10px; align-items: center; }
+  .hero__cta { width: 200px; text-align: center; padding: 10px 20px; font-size: 11px; }
+
+  /* --- About --- */
+  .about__content { flex-direction: column; padding: 20px 24px; gap: 20px; text-align: center; align-items: center; overflow-y: auto; max-width: 100%; }
+  .about__portrait-wrap { display: none; }
+  .about__heading { font-size: 32px; text-align: center; margin-bottom: var(--space-3); }
+  .about__bio { font-size: 14px; text-align: center; line-height: 1.5; margin-bottom: var(--space-3); }
+  .about__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; justify-items: center; text-align: center; margin-top: var(--space-4); margin-bottom: var(--space-4); padding: var(--space-4) 0; }
+  .about__stat-value { font-size: 22px; }
+  .about__stat-label { font-size: 9px; }
+  .about__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: var(--space-4); }
+  .about__chip { font-size: 11px; padding: 6px 12px; }
+  .about__chip-label { font-size: 9px; }
+  .about__chip-value { font-size: 11px; }
+  .about__resume-btn { width: 100%; max-width: 280px; text-align: center; font-size: 12px; padding: 12px 20px; }
+
+  /* --- LA Scene --- */
+  .la-scene__content { padding: 20px 16px; background: rgba(0, 0, 0, 0.7); max-width: 100%; }
+  .la-scene__heading { font-size: 28px; margin-bottom: var(--space-6); }
+  .la-scene__tagline { font-size: 10px; letter-spacing: 2px; }
+  .la-scene__grid { grid-template-columns: 1fr; gap: 16px; }
+  .la-scene__card { width: 100%; height: auto; aspect-ratio: 1; max-width: 100%; }
+  .la-scene__card-title { font-size: 13px; }
+  .la-scene__card-action { opacity: 1; }
+  .la-scene__contact { flex-direction: column; gap: 10px; align-items: center; }
+  .la-scene__contact .hero__cta { width: 200px; text-align: center; padding: 10px 20px; }
+  .la-scene__footer { font-size: 10px; }
+
+  /* --- Hide desktop-only elements --- */
+  .ufo { display: none; }
+  .volume-pill { display: none; }
+
+  /* --- Globe dimmer on mobile --- */
+  #globe-canvas { opacity: 0.6; }
 }
-
-
