@@ -1,5 +1,5 @@
 import './style.css'
-import { initGlobe, updateGlobe } from './globe.js'
+import { initGlobe } from './globe.js'
 import { initStars } from './stars.js'
 import { initScroll } from './scroll.js'
 import { decipherText, decipherAll, decipherOnReveal } from './decipher.js'
@@ -11,10 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobe();
   initAudio();
 
-  // DOM refs for scroll-driven transitions
-  const starsCanvas = document.getElementById('stars-canvas');
-  const shootingStars = document.getElementById('shooting-stars');
-  const laPhoto = document.getElementById('la-photo');
+  // DOM refs for scroll-driven content transitions
   const heroContent = document.querySelector('.hero__content');
   const aboutContent = document.querySelector('.about__content');
   const laContent = document.querySelector('.la-scene__content');
@@ -24,34 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let latestProgress = 0;
 
   function applyScrollVisuals(progress) {
-    // Drive globe zoom + fade + hero audio
-    updateGlobe({ progress });
     updateAudioScroll(progress);
-
-    // ── Stars: visible 0-0.60, fade out 0.60-0.75, gone 0.75+ ──
-    if (progress < 0.60) {
-      if (starsCanvas) starsCanvas.style.opacity = '1';
-      if (shootingStars) shootingStars.style.opacity = '1';
-    } else if (progress < 0.75) {
-      const starFade = 1 - ((progress - 0.60) / 0.15);
-      if (starsCanvas) starsCanvas.style.opacity = String(starFade);
-      if (shootingStars) shootingStars.style.opacity = String(starFade);
-    } else {
-      if (starsCanvas) starsCanvas.style.opacity = '0';
-      if (shootingStars) shootingStars.style.opacity = '0';
-    }
-
-    // ── LA photo: hidden 0-0.72, fade in 0.72-0.85, visible 0.85+ ──
-    // Globe is fully gone by 0.72 — no overlap
-    if (laPhoto) {
-      if (progress < 0.72) {
-        laPhoto.style.opacity = '0';
-      } else if (progress < 0.85) {
-        laPhoto.style.opacity = String((progress - 0.72) / 0.13);
-      } else {
-        laPhoto.style.opacity = '1';
-      }
-    }
 
     // ── Hero content: visible 0-0.20, fade out 0.20-0.30 ──
     if (heroContent) {
@@ -79,12 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // ── LA content: fade in 0.85-0.90, visible 0.90+ ──
+    // ── LA content: fade in 0.65-0.73, visible 0.73+ ──
     if (laContent) {
-      if (progress < 0.85) {
+      if (progress < 0.65) {
         laContent.style.opacity = '0';
-      } else if (progress < 0.90) {
-        laContent.style.opacity = String((progress - 0.85) / 0.05);
+      } else if (progress < 0.73) {
+        laContent.style.opacity = String((progress - 0.65) / 0.08);
       } else {
         laContent.style.opacity = '1';
       }
