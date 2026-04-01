@@ -735,7 +735,7 @@ body {
 /* Rocket — bottom-left, rotated 45deg like launching from Earth */
 .about__interactive--left {
   left: 12vw;
-  bottom: 20%;
+  bottom: 30%;
   top: auto;
 }
 
@@ -764,8 +764,8 @@ body {
 /* Rocket image — 150px, rotated 45deg with float animation */
 .about__interactive--left .about__interactive-img {
   width: 150px;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
   -webkit-animation: rocket-float 3s ease-in-out infinite;
   animation: rocket-float 3s ease-in-out infinite;
 }
@@ -779,8 +779,8 @@ body {
 }
 
 .about__interactive--left:hover .about__interactive-img {
-  -webkit-transform: rotate(45deg) scale(1.3);
-  transform: rotate(45deg) scale(1.3);
+  -webkit-transform: rotate(-45deg) scale(1.3);
+  transform: rotate(-45deg) scale(1.3);
   -webkit-filter: drop-shadow(0 0 16px rgba(96, 165, 250, 0.6));
   filter: drop-shadow(0 0 16px rgba(96, 165, 250, 0.6));
 }
@@ -797,12 +797,12 @@ body {
 
 /* Float animation for rocket — preserves 45deg rotation */
 @-webkit-keyframes rocket-float {
-  0%, 100% { -webkit-transform: rotate(45deg) translateY(0); transform: rotate(45deg) translateY(0); }
-  50%      { -webkit-transform: rotate(45deg) translateY(-5px); transform: rotate(45deg) translateY(-5px); }
+  0%, 100% { -webkit-transform: rotate(-45deg) translateY(0); transform: rotate(-45deg) translateY(0); }
+  50%      { -webkit-transform: rotate(-45deg) translateY(-5px); transform: rotate(-45deg) translateY(-5px); }
 }
 @keyframes rocket-float {
-  0%, 100% { transform: rotate(45deg) translateY(0); }
-  50%      { transform: rotate(45deg) translateY(-5px); }
+  0%, 100% { transform: rotate(-45deg) translateY(0); }
+  50%      { transform: rotate(-45deg) translateY(-5px); }
 }
 
 .about__dropdown {
