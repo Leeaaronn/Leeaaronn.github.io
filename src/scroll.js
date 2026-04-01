@@ -1,75 +1,52 @@
 /**
- * Scroll module — centralized scroll detection, progress bar, dot navigation.
- * Drives both UI updates and globe behavior via onScroll callback.
+ * Scroll module — continuous scroll progress, progress bar, dot navigation.
+ * No scroll-snap. Single progress value (0-1) drives everything.
  */
 
 /**
  * Initialize scroll detection, progress bar, and dot navigation.
  * @param {Object} options
- * @param {Function} options.onScroll - Callback receiving { activeSection: string, progress: number }
+ * @param {Function} options.onScroll - Callback receiving { progress: number }
+ *   progress: 0 (top) to 1 (bottom) of the entire page
  */
 export function initScroll({ onScroll } = {}) {
-  const sections = Array.from(document.querySelectorAll('.section'));
   const progressFill = document.getElementById('progress-fill');
   const dots = Array.from(document.querySelectorAll('.dot-nav__dot'));
-  let currentActive = 'hero';
+  let currentDot = 'hero';
 
-  function getScrollState() {
-    // Use whichever element is actually scrolling (body or documentElement)
-    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-    const scrollHeight = Math.max(
-      document.body.scrollHeight - document.body.clientHeight,
-      document.documentElement.scrollHeight - document.documentElement.clientHeight
-    );
-
-    // Overall scroll progress (0 to 1) for the progress bar
-    const overallProgress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
-
-    // Active section detection
-    const viewportHeight = window.innerHeight;
-    let activeSection = 'hero';
-    let sectionProgress = 0;
-
-    for (const section of sections) {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= viewportHeight * 0.5 && rect.bottom > viewportHeight * 0.5) {
-        activeSection = section.id;
-        sectionProgress = Math.max(0, Math.min(1, -rect.top / viewportHeight));
-        break;
-      }
-    }
-
-    // Find section index (0-based) for progressive zoom
-    const sectionIndex = sections.findIndex(s => s.id === activeSection);
-
-    return { activeSection, progress: sectionProgress, overallProgress, sectionIndex };
-  }
-
-  function updateUI(state) {
-    // Progress bar (SCRL-02)
-    if (progressFill) {
-      progressFill.style.width = (state.overallProgress * 100) + '%';
-    }
-
-    // Dot nav active state (SCRL-03)
-    if (state.activeSection !== currentActive) {
-      currentActive = state.activeSection;
-      dots.forEach(dot => {
-        const isActive = dot.dataset.section === currentActive;
-        dot.classList.toggle('dot-nav__dot--active', isActive);
-      });
-    }
+  // Dot progress ranges: hero 0-0.30, about 0.30-0.60, la-scene 0.60-1.0
+  function getDotSection(progress) {
+    if (progress < 0.30) return 'hero';
+    if (progress < 0.60) return 'about';
+    return 'la-scene';
   }
 
   function onScrollEvent() {
-    const state = getScrollState();
-    updateUI(state);
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? Math.max(0, Math.min(1, scrollTop / scrollHeight)) : 0;
+
+    // Progress bar
+    if (progressFill) {
+      progressFill.style.width = (progress * 100) + '%';
+    }
+
+    // Dot nav
+    const dotSection = getDotSection(progress);
+    if (dotSection !== currentDot) {
+      currentDot = dotSection;
+      dots.forEach(dot => {
+        dot.classList.toggle('dot-nav__dot--active', dot.dataset.section === currentDot);
+      });
+    }
+
+    // Callback with progress
     if (onScroll) {
-      onScroll({ activeSection: state.activeSection, progress: state.progress, overallProgress: state.overallProgress, sectionIndex: state.sectionIndex });
+      onScroll({ progress });
     }
   }
 
-  // Dot click → scroll to section (SCRL-03)
+  // Dot click → scroll to percentage
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const sectionId = dot.dataset.section;
@@ -80,31 +57,9 @@ export function initScroll({ onScroll } = {}) {
     });
   });
 
-  // Section fade-up triggers
-  const fadeObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (entry.target.id === 'about') {
-            entry.target.classList.add('about-visible');
-          } else if (entry.target.id === 'la-scene') {
-            entry.target.classList.add('la-scene-visible');
-          }
-        }
-      });
-    },
-    { threshold: 0.3 }
-  );
-
-  const aboutSection = document.getElementById('about');
-  const laSceneSection = document.getElementById('la-scene');
-  if (aboutSection) fadeObserver.observe(aboutSection);
-  if (laSceneSection) fadeObserver.observe(laSceneSection);
-
-  // Listen on both body and window to catch scroll events regardless of browser behavior
-  document.body.addEventListener('scroll', onScrollEvent, { passive: true });
+  // Listen on window (no scroll-snap, normal page scroll)
   window.addEventListener('scroll', onScrollEvent, { passive: true });
 
-  // Fire once on load to set initial state
+  // Fire once on load
   onScrollEvent();
 }

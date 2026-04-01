@@ -3,8 +3,8 @@
  * atmospheric glow, pulsing LA marker, and smooth rotation.
  *
  * Exports:
- *   initGlobe()       — initializes the globe and starts the animation loop
- *   updateGlobe(scrollState) — stub for Plan 03 scroll-driven behavior
+ *   initGlobe()              — initializes the globe and starts the animation loop
+ *   updateGlobe({ progress }) — scroll-driven zoom from space to LA (progress 0-1)
  */
 
 import {
@@ -26,25 +26,16 @@ import {
   Vector3,
 } from 'three';
 
-// ── Module-scoped state (accessible to updateGlobe in Plan 03) ──────────────
 let scene, camera, renderer, earthMesh, atmosphereMesh, markerMesh, clock;
 let globeGroup;
 let laLabelEl = null;
 
 const GLOBE_RADIUS = 1.5;
-const CAMERA_Z_DEFAULT = 5; // default camera distance — used by updateGlobe in Plan 03
+const CAMERA_Z_FAR = 5;    // deep space
+const CAMERA_Z_CLOSE = 1.5; // filling viewport before fade
 const LA_LAT = 34.05;
 const LA_LON = -118.25;
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-/**
- * Convert geographic coordinates to a 3D vector on the sphere surface.
- * @param {number} lat  Latitude in degrees (positive = north)
- * @param {number} lon  Longitude in degrees (positive = east)
- * @param {number} radius  Sphere radius
- * @returns {Vector3}
- */
 function latLonToVec3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
@@ -54,101 +45,55 @@ function latLonToVec3(lat, lon, radius) {
   return new Vector3(x, y, z);
 }
 
-// ── Animation loop ────────────────────────────────────────────────────────────
-
 function animate() {
-  // Slow Y-axis rotation (GLOB-04)
   globeGroup.rotation.y += 0.0005;
-
-  // Pulse the LA marker — emissive intensity and scale
   const elapsed = clock.getElapsedTime();
   markerMesh.material.emissiveIntensity = 0.5 + Math.sin(elapsed * 3) * 0.5;
   const pulse = 1 + Math.sin(elapsed * 3) * 0.3;
   markerMesh.scale.set(pulse, pulse, pulse);
-
   renderer.render(scene, camera);
 }
 
-// ── Public API ────────────────────────────────────────────────────────────────
-
-/**
- * Initialize the Three.js Earth globe and attach its canvas to the DOM.
- * The canvas is fixed-position, transparent, z-index 1 (above stars at 0,
- * below page content).
- */
 export function initGlobe() {
-  // 1. Renderer setup ─────────────────────────────────────────────────────────
   renderer = new WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  // RESP-02: cap pixel ratio at 2 for mobile performance
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // Canvas positioning — fixed, non-interactive, above stars (z-index 0)
   const canvas = renderer.domElement;
+  canvas.id = 'globe-canvas';
   canvas.style.position = 'fixed';
   canvas.style.top = '0';
   canvas.style.left = '0';
   canvas.style.zIndex = '1';
   canvas.style.pointerEvents = 'none';
-  canvas.style.transition = 'opacity 0.6s ease';
   document.body.appendChild(canvas);
 
-  // 2. Camera setup ───────────────────────────────────────────────────────────
-  camera = new PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    100
-  );
-  camera.position.set(0, 0, CAMERA_Z_DEFAULT);
+  camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, CAMERA_Z_FAR);
 
-  // 3. Scene + lighting ───────────────────────────────────────────────────────
   scene = new Scene();
-
-  // Dim ambient so the dark side of the globe is subtly visible
-  const ambientLight = new AmbientLight(0x333333);
-  scene.add(ambientLight);
-
-  // Main directional light — sun-like, off-axis
+  scene.add(new AmbientLight(0x333333));
   const dirLight = new DirectionalLight(0xffffff, 1.5);
   dirLight.position.set(5, 3, 5);
   scene.add(dirLight);
 
-  // 4. Globe group (parent for earth + atmosphere + marker) ───────────────────
   globeGroup = new Group();
   scene.add(globeGroup);
 
-  // 5. Earth sphere — GLOB-01 ─────────────────────────────────────────────────
   const earthGeometry = new SphereGeometry(GLOBE_RADIUS, 64, 64);
-
   const loader = new TextureLoader();
-  const diffuseTexture = loader.load(
-    'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-  );
-  const bumpTexture = loader.load(
-    'https://unpkg.com/three-globe/example/img/earth-topology.png'
-  );
-  const waterTexture = loader.load(
-    'https://unpkg.com/three-globe/example/img/earth-water.png'
-  );
-
   const earthMaterial = new MeshPhongMaterial({
-    map: diffuseTexture,
-    bumpMap: bumpTexture,
+    map: loader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg'),
+    bumpMap: loader.load('https://unpkg.com/three-globe/example/img/earth-topology.png'),
     bumpScale: 0.05,
-    specularMap: waterTexture,
+    specularMap: loader.load('https://unpkg.com/three-globe/example/img/earth-water.png'),
     specular: new Color(0x222222),
     shininess: 25,
   });
-
   earthMesh = new Mesh(earthGeometry, earthMaterial);
   globeGroup.add(earthMesh);
 
-  // 6. Atmospheric glow — GLOB-02 ─────────────────────────────────────────────
-  // A slightly larger sphere using a custom ShaderMaterial.
-  // RGB (0.376, 0.647, 0.980) = #60a5fa in normalized floats.
   const atmosphereGeometry = new SphereGeometry(GLOBE_RADIUS * 1.15, 64, 64);
-
   const atmosphereMaterial = new ShaderMaterial({
     vertexShader: `
       varying vec3 vNormal;
@@ -168,14 +113,10 @@ export function initGlobe() {
     blending: AdditiveBlending,
     transparent: true,
   });
-
   atmosphereMesh = new Mesh(atmosphereGeometry, atmosphereMaterial);
   globeGroup.add(atmosphereMesh);
 
-  // 7. LA marker — GLOB-03 ────────────────────────────────────────────────────
-  // Positioned slightly above the surface (radius * 1.01) so it sits on top.
   const markerPosition = latLonToVec3(LA_LAT, LA_LON, GLOBE_RADIUS * 1.01);
-
   const markerGeometry = new SphereGeometry(0.03, 16, 16);
   const markerMaterial = new MeshPhongMaterial({
     color: 0xef4444,
@@ -183,16 +124,13 @@ export function initGlobe() {
     emissiveIntensity: 0.8,
     transparent: true,
   });
-
   markerMesh = new Mesh(markerGeometry, markerMaterial);
   markerMesh.position.copy(markerPosition);
   globeGroup.add(markerMesh);
 
-  // 8. Animation loop — GLOB-04 ───────────────────────────────────────────────
   clock = new Clock();
   renderer.setAnimationLoop(animate);
 
-  // 9. Resize handler ─────────────────────────────────────────────────────────
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -202,16 +140,14 @@ export function initGlobe() {
 }
 
 /**
- * Update globe based on scroll state — progressive zoom toward LA.
+ * Update globe based on continuous scroll progress (0-1).
  *
- * 3-section site: Hero → About → LA Scene
- * Section 0 (hero):     Full Earth from space (z=5)
- * Section 1 (about):    Zoom toward North America / LA (z=5 → 2.8)
- * Section 2 (la-scene): Globe fades out, LA skyline takes over
- *
- * @param {{ activeSection: string, progress: number, sectionIndex: number }} scrollState
+ * 0.00-0.30: Full Earth from space (z=5), slowly rotating
+ * 0.30-0.60: Zoom toward LA (z=5 → 1.5), pan to center LA, marker visible
+ * 0.60-0.80: Globe continues zoom + fades out (opacity 1 → 0)
+ * 0.80-1.00: Globe gone
  */
-export function updateGlobe({ activeSection, progress, sectionIndex }) {
+export function updateGlobe({ progress }) {
   if (!renderer) return;
 
   if (!laLabelEl) {
@@ -220,38 +156,51 @@ export function updateGlobe({ activeSection, progress, sectionIndex }) {
 
   const canvas = renderer.domElement;
 
-  if (activeSection === 'hero') {
-    // Full Earth from space — slowly spinning, centered
-    camera.position.z += (CAMERA_Z_DEFAULT - camera.position.z) * 0.12;
+  if (progress <= 0.30) {
+    // Hero zone — full Earth from space
+    const targetZ = CAMERA_Z_FAR;
+    camera.position.z += (targetZ - camera.position.z) * 0.15;
     canvas.style.opacity = '1';
-    globeGroup.position.x += (0 - globeGroup.position.x) * 0.08;
-    globeGroup.position.y += (0 - globeGroup.position.y) * 0.08;
+    globeGroup.position.x += (0 - globeGroup.position.x) * 0.1;
+    globeGroup.position.y += (0 - globeGroup.position.y) * 0.1;
     if (laLabelEl) laLabelEl.classList.remove('visible');
 
-  } else if (activeSection === 'about') {
-    // Progressive zoom from space to close-up of LA
-    // Camera z: 5 → 2.8 across the section
-    const targetZ = CAMERA_Z_DEFAULT - (progress * 2.2);
-    camera.position.z += (targetZ - camera.position.z) * 0.12;
+  } else if (progress <= 0.60) {
+    // About zone — zoom from z=5 to z=1.5, pan toward LA
+    const zoomT = (progress - 0.30) / 0.30; // 0→1 within this zone
+    const targetZ = CAMERA_Z_FAR - (CAMERA_Z_FAR - CAMERA_Z_CLOSE) * zoomT;
+    camera.position.z += (targetZ - camera.position.z) * 0.15;
     canvas.style.opacity = '1';
 
-    // Pan toward LA as we zoom
-    const targetX = -0.4 * progress;
-    const targetY = 0.25 * progress;
-    globeGroup.position.x += (targetX - globeGroup.position.x) * 0.08;
-    globeGroup.position.y += (targetY - globeGroup.position.y) * 0.08;
+    const targetX = -0.4 * zoomT;
+    const targetY = 0.25 * zoomT;
+    globeGroup.position.x += (targetX - globeGroup.position.x) * 0.1;
+    globeGroup.position.y += (targetY - globeGroup.position.y) * 0.1;
 
-    // Show LA label once zoomed past 30%
+    // LA label visible past 40% (halfway through about)
     if (laLabelEl) {
-      if (progress > 0.3) {
+      if (zoomT > 0.35) {
         laLabelEl.classList.add('visible');
       } else {
         laLabelEl.classList.remove('visible');
       }
     }
 
+  } else if (progress <= 0.80) {
+    // Transition zone — globe continues close + fades out
+    const fadeT = (progress - 0.60) / 0.20; // 0→1 over this zone
+    const targetZ = CAMERA_Z_CLOSE - (fadeT * 0.5); // even closer
+    camera.position.z += (targetZ - camera.position.z) * 0.15;
+    canvas.style.opacity = String(1 - fadeT);
+
+    // Keep panning
+    globeGroup.position.x += (-0.4 - globeGroup.position.x) * 0.1;
+    globeGroup.position.y += (0.25 - globeGroup.position.y) * 0.1;
+
+    if (laLabelEl) laLabelEl.classList.remove('visible');
+
   } else {
-    // LA Scene — globe is gone, sky takes over
+    // LA Landing — globe fully gone
     canvas.style.opacity = '0';
     if (laLabelEl) laLabelEl.classList.remove('visible');
   }

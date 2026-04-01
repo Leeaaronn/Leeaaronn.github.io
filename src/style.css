@@ -1,5 +1,5 @@
 /* ==========================================================================
-   src/style.css — Complete design system (SINGLE FILE, no splitting per D-03/D-04)
+   src/style.css — Complete design system (SINGLE FILE, no splitting)
    ========================================================================== */
 
 
@@ -29,7 +29,7 @@
   --text-2xl:      1.5rem;     /* 24px */
   --text-3xl:      2rem;       /* 32px */
   --text-4xl:      3rem;       /* 48px */
-  --text-hero:     clamp(3.75rem, 8vw, 7.5rem); /* 60px–120px */
+  --text-hero:     clamp(3.75rem, 8vw, 7.5rem);
 
   /* Spacing */
   --space-1:  0.25rem;
@@ -62,9 +62,7 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
-  /* overflow: hidden forces body to be the actual scroll container,
-     so scroll events fire on body (not documentElement) */
-  overflow: hidden;
+  scroll-behavior: smooth;
 }
 
 img, video, canvas {
@@ -90,7 +88,7 @@ ul, ol {
 
 
 /* ==========================================================================
-   Section 3 — Base / Global Styles
+   Section 3 — Base / Global Styles (NO scroll-snap — continuous scroll)
    ========================================================================== */
 
 body {
@@ -100,27 +98,16 @@ body {
   font-size: var(--text-base);
   line-height: 1.6;
   overflow-x: hidden;
-  /* Scroll-snap container */
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  height: 100vh;
-  height: 100svh;
 }
 
 
 /* ==========================================================================
-   Section 4 — Scroll Container + Sections
+   Section 4 — Sections (normal document flow, each 100vh tall)
    ========================================================================== */
-
-.scroll-container {
-  /* Sections snap inside body — body IS the scroll container */
-}
 
 .section {
   min-height: 100vh;
-  min-height: 100svh;    /* RESP-03: mobile address bar fix */
-  scroll-snap-align: start;
+  min-height: 100svh;
   position: relative;
   display: flex;
   align-items: center;
@@ -129,8 +116,32 @@ body {
 
 
 /* ==========================================================================
-   Section 5 — (Reserved)
+   Section 5 — Fixed Background: LA Photo (crossfade layer)
    ========================================================================== */
+
+.la-photo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/assets/hollywood.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  z-index: 0;
+}
+
+/* Dark overlay on top of the photo for text contrast */
+.la-photo::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.50);
+}
 
 
 /* ==========================================================================
@@ -297,7 +308,6 @@ body {
    Section 9 — Hero Section
    ========================================================================== */
 
-/* --- Hero Layout --- */
 .hero__content {
   position: relative;
   z-index: 10;
@@ -309,7 +319,6 @@ body {
   padding: 0 var(--space-8);
 }
 
-/* --- Eyebrow (HERO-01) --- */
 .hero__eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -319,7 +328,6 @@ body {
   margin-bottom: var(--space-6);
 }
 
-/* --- Title (HERO-02) --- */
 .hero__title {
   font-family: var(--font-display);
   font-size: clamp(52px, 9vw, 120px);
@@ -334,7 +342,6 @@ body {
   color: var(--accent);
 }
 
-/* --- Subtitle (HERO-03) --- */
 .hero__subtitle {
   font-family: var(--font-body);
   font-size: 17px;
@@ -344,13 +351,11 @@ body {
   margin-bottom: var(--space-12);
 }
 
-/* --- CTA Buttons (HERO-04) --- */
 .hero__ctas {
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: var(--space-16);
 }
 
 .hero__cta {
@@ -370,7 +375,7 @@ body {
   color: var(--color-white);
 }
 
-/* --- Staggered Fade-in Animation (HERO-06) --- */
+/* --- Staggered Fade-in Animation (on load only) --- */
 @keyframes hero-fade-in {
   from {
     opacity: 0;
@@ -411,11 +416,11 @@ body {
   }
 }
 
+
 /* ==========================================================================
    Section 10 — About Section
    ========================================================================== */
 
-/* --- About Layout (two-column) --- */
 .about__content {
   position: relative;
   z-index: 10;
@@ -423,32 +428,16 @@ body {
   align-items: flex-start;
   gap: var(--space-16);
   max-width: 1000px;
-  padding: 0 var(--space-8);
+  padding: var(--space-8);
   width: 100%;
-}
-
-/* --- Fade-up animation (ABOU-06) --- */
-@keyframes about-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#about .about__content {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   opacity: 0;
-  transition: none;
 }
 
-#about.about-visible .about__content {
-  animation: about-fade-up 0.8s ease-out forwards;
-}
-
-/* --- Portrait (ABOU-01) --- */
 .about__portrait-wrap {
   position: relative;
   flex-shrink: 0;
@@ -482,7 +471,6 @@ body {
   border-radius: 4px;
 }
 
-/* --- Heading (ABOU-02) --- */
 .about__heading {
   font-family: var(--font-display);
   font-size: 46px;
@@ -496,7 +484,6 @@ body {
   color: var(--accent);
 }
 
-/* --- Bio paragraphs --- */
 .about__bio {
   font-family: var(--font-body);
   font-size: 18px;
@@ -505,7 +492,6 @@ body {
   margin-bottom: var(--space-4);
 }
 
-/* --- Stats Row (ABOU-03) --- */
 .about__stats {
   display: flex;
   gap: var(--space-8);
@@ -537,7 +523,6 @@ body {
   letter-spacing: 0.08em;
 }
 
-/* --- Detail Chips (ABOU-04) --- */
 .about__chips {
   display: flex;
   flex-wrap: wrap;
@@ -549,7 +534,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  background: var(--color-dark-2);
+  background: rgba(17, 17, 17, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   padding: 6px 14px;
@@ -569,7 +554,6 @@ body {
   color: var(--color-grey-1);
 }
 
-/* --- Resume Button (ABOU-05) --- */
 .about__resume-btn {
   display: inline-block;
   font-family: var(--font-mono);
@@ -588,18 +572,19 @@ body {
   color: var(--color-black);
 }
 
-/* --- About Mobile (RESP-01) --- */
+/* --- About Mobile --- */
 @media (max-width: 768px) {
   .about__content {
     flex-direction: column;
     align-items: center;
     text-align: center;
     gap: var(--space-8);
-    padding: 0 var(--space-4);
+    padding: var(--space-6) var(--space-4);
   }
 
   .about__portrait {
     width: 240px;
+    height: 290px;
   }
 
   .about__stats {
@@ -625,118 +610,15 @@ body {
 
 
 /* ==========================================================================
-   Section 11 — LA Scene (Final Section) — Scroll-Driven Space→Sky Crossfade
+   Section 11 — LA Scene (Final Section — LA photo background)
    ========================================================================== */
 
-/* --sky-progress is set by main.js: 0 = space, 1 = full LA sky */
-
-/* --- Scene container --- */
 .la-scene {
-  --sky-progress: 0;
   position: relative;
   overflow: hidden;
   flex-direction: column;
-  background: var(--color-black);
 }
 
-/* --- Sky gradient — fades in as user scrolls into section --- */
-.la-scene__sky {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    #87CEEB 0%,
-    #7EC8E3 20%,
-    #6AB0D9 40%,
-    #4A90D9 60%,
-    #3A6FB0 75%,
-    #1a1a2e 92%,
-    #0d0d1a 100%
-  );
-  opacity: var(--sky-progress);
-  z-index: 1;
-  transition: opacity 0.6s ease;
-}
-
-/* --- Hills with Hollywood sign --- */
-.la-scene__hills {
-  position: absolute;
-  bottom: 12%;
-  left: 0;
-  right: 0;
-  height: 200px;
-  z-index: 2;
-  opacity: var(--sky-progress);
-  transition: opacity 0.6s ease;
-}
-
-.la-scene__hills-svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* --- City buildings silhouette --- */
-.la-scene__buildings {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  z-index: 3;
-  opacity: var(--sky-progress);
-  transition: opacity 0.6s ease;
-}
-
-.la-scene__buildings-svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* --- Palm trees --- */
-.la-scene__palms {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  z-index: 4;
-  pointer-events: none;
-  opacity: var(--sky-progress);
-  transition: opacity 0.6s ease;
-}
-
-.la-scene__palm {
-  position: absolute;
-  bottom: 10%;
-  height: 160px;
-}
-
-.la-scene__palm--1 {
-  left: 3%;
-}
-
-.la-scene__palm--2 {
-  right: 5%;
-  height: 140px;
-}
-
-/* --- Dark ground/street --- */
-.la-scene__ground {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 8%;
-  background: #0a0a14;
-  z-index: 5;
-  opacity: var(--sky-progress);
-  transition: opacity 0.6s ease;
-}
-
-/* --- Content overlay --- */
 .la-scene__content {
   position: relative;
   z-index: 10;
@@ -747,16 +629,16 @@ body {
   padding: var(--space-12) var(--space-8) var(--space-8);
   width: 100%;
   max-width: 760px;
+  opacity: 0;
 }
 
-/* --- Heading --- */
 .la-scene__heading {
   font-family: var(--font-display);
   font-size: 48px;
   font-weight: 400;
   color: var(--color-white);
   margin-bottom: var(--space-8);
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
 }
 
 /* --- 2x2 Project Grid --- */
@@ -793,7 +675,6 @@ body {
   object-fit: cover;
 }
 
-/* --- Card hover overlay with title bar --- */
 .la-scene__card-overlay {
   position: absolute;
   bottom: 0;
@@ -816,7 +697,6 @@ body {
   color: var(--color-white);
 }
 
-/* --- Contact links (reuses hero__cta style) --- */
 .la-scene__contact {
   display: flex;
   gap: var(--space-4);
@@ -825,34 +705,12 @@ body {
   margin-bottom: var(--space-8);
 }
 
-/* --- Footer --- */
 .la-scene__footer {
   font-family: var(--font-mono);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-grey-2);
-}
-
-/* --- LA Scene fade-in on snap --- */
-@keyframes la-scene-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#la-scene .la-scene__content {
-  opacity: 0;
-  transition: none;
-}
-
-#la-scene.la-scene-visible .la-scene__content {
-  animation: la-scene-fade-in 0.8s ease-out forwards;
 }
 
 /* --- LA Scene Mobile --- */
@@ -877,9 +735,5 @@ body {
   .la-scene__contact {
     flex-direction: column;
     align-items: center;
-  }
-
-  .la-scene__palm {
-    height: 90px;
   }
 }
