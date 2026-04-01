@@ -231,6 +231,12 @@ body {
   text-transform: uppercase;
   letter-spacing: 4px;
   color: var(--accent);
+  animation: loading-text-pulse 2s ease-in-out infinite;
+}
+
+@keyframes loading-text-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 @media (max-width: 768px) {

@@ -4,13 +4,10 @@ import { initStars } from './stars.js'
 import { initScroll } from './scroll.js'
 import { decipherText, decipherAll, decipherOnReveal } from './decipher.js'
 import { initParticles } from './particles.js'
-import { startLoadingAudio, startMainAudio, initAudioSlider } from './audio.js'
+import { initAudioOnClick, fadeOutLoadingAudio, startMainAudio, initAudioSlider } from './audio.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Start alien.mp3 for loading screen ──
-  startLoadingAudio();
-
-  // ── Loading screen sequence ──
+  // ── Loading screen — wait for user click before starting ──
   const loadingScreen = document.getElementById('loading-screen');
   const loadingBar = document.getElementById('loading-bar-fill');
   const loadingText = document.getElementById('loading-text');
@@ -56,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   `;
   document.head.appendChild(shootingStyle);
 
-  // Spawn shooting stars every 1.5-2s during loading
+  // Spawn shooting stars while waiting for click
   let loadingStarsActive = true;
   function scheduleLoadingStar() {
     if (!loadingStarsActive) return;
@@ -70,23 +67,50 @@ document.addEventListener('DOMContentLoaded', () => {
   spawnLoadingStar();
   scheduleLoadingStar();
 
-  // Start loading bar + decipher text at 0.5s
-  setTimeout(() => {
+  // Show "CLICK TO ENTER" with decipher effect
+  if (loadingText) {
+    loadingText.textContent = 'CLICK TO ENTER';
+    decipherText(loadingText, { cycleSpeed: 60 });
+  }
+
+  // Add click prompt styling
+  if (loadingScreen) loadingScreen.style.cursor = 'pointer';
+
+  // ── Wait for user click to start everything ──
+  function onLoadingClick() {
+    if (!loadingScreen) return;
+    loadingScreen.removeEventListener('click', onLoadingClick);
+    loadingScreen.style.cursor = 'default';
+
+    // 1. Start alien.mp3 + pre-create astronaut.mp3 (user interaction context)
+    initAudioOnClick();
+
+    // 2. Start loading bar animation
     if (loadingBar) loadingBar.style.width = '100%';
-    if (loadingText) decipherText(loadingText, { cycleSpeed: 60 });
-  }, 500);
 
-  // After 4s: fade out loading screen, then start the site
-  setTimeout(() => {
-    loadingStarsActive = false;
-    if (loadingScreen) loadingScreen.classList.add('loading-screen--hidden');
+    // 3. Change text to "INITIALIZING..." with decipher
+    if (loadingText) {
+      loadingText.textContent = 'INITIALIZING...';
+      decipherText(loadingText, { cycleSpeed: 60 });
+    }
 
-    // After fade-out transition (0.5s), remove and start site
+    // 4. Fade out alien audio starting at 3.5s
+    setTimeout(() => fadeOutLoadingAudio(), 3500);
+
+    // 5. After 4s: fade out loading screen, then start the site
     setTimeout(() => {
-      if (loadingScreen) loadingScreen.style.display = 'none';
-      initSite();
-    }, 500);
-  }, 4000);
+      loadingStarsActive = false;
+      if (loadingScreen) loadingScreen.classList.add('loading-screen--hidden');
+
+      // After fade-out transition (0.5s), remove and start site
+      setTimeout(() => {
+        if (loadingScreen) loadingScreen.style.display = 'none';
+        initSite();
+      }, 500);
+    }, 4000);
+  }
+
+  if (loadingScreen) loadingScreen.addEventListener('click', onLoadingClick);
 });
 
 function initSite() {

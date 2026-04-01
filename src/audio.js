@@ -1,7 +1,8 @@
 /**
- * Audio module — two tracks:
+ * Audio module — two tracks, both gated behind a user click:
  *   1. alien.mp3 — plays during loading screen only, fades out before main site
- *   2. astronaut.mp3 — plays across all sections after loading screen finishes
+ *   2. astronaut.mp3 — created during click handler (same interaction context),
+ *      played after loading screen finishes
  */
 
 let alienAudio = null;
@@ -17,61 +18,62 @@ function applyMainVolume() {
 }
 
 /**
- * Start alien.mp3 for the loading screen.
- * Fades out starting at 3.5s, silent by 4.5s.
+ * Called inside the loading screen click handler (user interaction context).
+ * Creates both Audio elements and starts alien.mp3 immediately.
+ * astronaut.mp3 is created now (to satisfy autoplay policy) but not played yet.
  */
-export function startLoadingAudio() {
-  alienAudio = new Audio('/assets/audio/alien.mp3');
-  alienAudio.loop = false;
-  alienAudio.volume = (sliderValue / 100) * MAX_GAIN;
-
-  // Try autoplay immediately
-  alienAudio.play().catch(() => {});
-
-  // Fallback: start on first interaction
-  let started = false;
-  const tryPlay = () => {
-    if (started || !alienAudio.paused) { started = true; return; }
-    started = true;
+export function initAudioOnClick() {
+  try {
+    alienAudio = new Audio('/assets/audio/alien.mp3');
+    alienAudio.loop = false;
+    alienAudio.volume = (sliderValue / 100) * MAX_GAIN;
     alienAudio.play().catch(() => {});
-    document.removeEventListener('click', tryPlay);
-    document.removeEventListener('keydown', tryPlay);
-    document.removeEventListener('scroll', tryPlay);
-  };
-  document.addEventListener('click', tryPlay);
-  document.addEventListener('keydown', tryPlay);
-  document.addEventListener('scroll', tryPlay);
+  } catch (e) { /* audio is optional */ }
 
-  // Fade out alien audio: start at 3.5s, fully silent by 4.5s
+  // Pre-create main audio in this same user-interaction context
+  try {
+    mainAudio = new Audio('/assets/audio/astronaut.mp3');
+    mainAudio.loop = false;
+    mainAudio.preload = 'auto';
+    applyMainVolume();
+  } catch (e) { /* audio is optional */ }
+}
+
+/**
+ * Fade out alien.mp3 starting now, silent in ~1s.
+ */
+export function fadeOutLoadingAudio() {
+  if (!alienAudio) return;
   const startVol = alienAudio.volume;
-  setTimeout(() => {
-    const fadeSteps = 20;
-    const fadeInterval = 1000 / fadeSteps; // 50ms steps over 1s
-    let step = 0;
-    alienFadeInterval = setInterval(() => {
-      step++;
+  const fadeSteps = 20;
+  const fadeInterval = 1000 / fadeSteps;
+  let step = 0;
+  alienFadeInterval = setInterval(() => {
+    step++;
+    try {
       alienAudio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
-      if (step >= fadeSteps) {
-        clearInterval(alienFadeInterval);
-        alienAudio.pause();
-        alienAudio.currentTime = 0;
-      }
-    }, fadeInterval);
-  }, 3500);
+    } catch (e) { /* ignore */ }
+    if (step >= fadeSteps) {
+      clearInterval(alienFadeInterval);
+      alienFadeInterval = null;
+      try { alienAudio.pause(); alienAudio.currentTime = 0; } catch (e) { /* ignore */ }
+    }
+  }, fadeInterval);
 }
 
 /**
  * Start astronaut.mp3 for the main site. Called after loading screen finishes.
+ * The Audio element was already created during the click handler.
  */
 export function startMainAudio() {
-  // Clean up alien audio fade if still running
   if (alienFadeInterval) { clearInterval(alienFadeInterval); alienFadeInterval = null; }
-  if (alienAudio) { alienAudio.pause(); alienAudio.currentTime = 0; }
+  if (alienAudio) {
+    try { alienAudio.pause(); alienAudio.currentTime = 0; } catch (e) { /* ignore */ }
+  }
 
-  mainAudio = new Audio('/assets/audio/astronaut.mp3');
-  mainAudio.loop = false;
+  if (!mainAudio) return;
   applyMainVolume();
-  mainAudio.play().catch(() => {});
+  try { mainAudio.play().catch(() => {}); } catch (e) { /* audio is optional */ }
 }
 
 /**
