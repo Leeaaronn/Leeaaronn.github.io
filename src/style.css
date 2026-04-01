@@ -140,7 +140,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.50);
+  background: rgba(0, 0, 0, 0.45);
 }
 
 
@@ -428,14 +428,21 @@ body {
   align-items: flex-start;
   gap: var(--space-16);
   max-width: 1000px;
-  padding: var(--space-8);
+  padding: 0 var(--space-8);
   width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
   opacity: 0;
+}
+
+/* Text shadow for readability over globe — no dark card */
+.about__heading,
+.about__bio,
+.about__stat-value,
+.about__stat-label,
+.about__chip-label,
+.about__chip-value,
+.about__resume-btn,
+.about__portrait-label {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .about__portrait-wrap {
