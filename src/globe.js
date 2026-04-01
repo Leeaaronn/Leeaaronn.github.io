@@ -30,15 +30,17 @@ function animate() {
 }
 
 export function initGlobe() {
-  renderer = new WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer = new WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'default' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
   const canvas = renderer.domElement;
   canvas.id = 'globe-canvas';
   canvas.style.position = 'fixed';
   canvas.style.top = '0';
   canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
   canvas.style.zIndex = '1';
   canvas.style.pointerEvents = 'none';
   document.body.appendChild(canvas);
