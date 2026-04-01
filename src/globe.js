@@ -64,7 +64,7 @@ function animate() {
 
   const elapsed = clock.getElapsedTime();
   markerMesh.material.emissiveIntensity = 0.5 + Math.sin(elapsed * 3) * 0.5;
-  const pulse = 1 + Math.sin(elapsed * 3) * 0.3;
+  const pulse = 1 + Math.sin(elapsed * 3) * 0.15;
   markerMesh.scale.set(pulse, pulse, pulse);
   renderer.render(scene, camera);
 }
@@ -162,7 +162,7 @@ export function initGlobe() {
   globeGroup.add(outerGlow);
 
   // LA marker
-  const markerGeometry = new SphereGeometry(0.03, 16, 16);
+  const markerGeometry = new SphereGeometry(0.008, 16, 16);
   const markerMaterial = new MeshPhongMaterial({
     color: 0xef4444,
     emissive: 0xef4444,
