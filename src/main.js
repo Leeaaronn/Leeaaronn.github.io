@@ -132,7 +132,12 @@ function initSite() {
   let rafId = null;
   let latestProgress = 0;
 
+  const isMobile = window.innerWidth <= 768;
+
   function applyScrollVisuals(progress) {
+    // On mobile, all sections visible — no scroll-driven opacity
+    if (isMobile) return;
+
     // ── Hero content: visible 0-0.20, fade out 0.20-0.30 ──
     if (heroContent) {
       if (progress < 0.20) {
@@ -169,7 +174,13 @@ function initSite() {
         laContent.style.opacity = '1';
       }
     }
+  }
 
+  // On mobile, ensure all sections are visible (no inline opacity overrides)
+  if (isMobile) {
+    if (heroContent) heroContent.style.opacity = '1';
+    if (aboutContent) aboutContent.style.opacity = '1';
+    if (laContent) laContent.style.opacity = '1';
   }
 
   // ── Particle network — interactive lines following cursor ──

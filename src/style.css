@@ -1096,7 +1096,7 @@ body {
   .ufo-orbit, [class*="ufo"] { display: none !important; }
   .volume-control, [class*="volume"] { display: none !important; }
   .skills-ticker, [class*="ticker"] { display: none !important; }
-  #particles-canvas { display: none !important; }
+  #particle-canvas, #particles-canvas { display: none !important; }
 
   /* Globe smaller */
   #globe-canvas { opacity: 0.5 !important; }
