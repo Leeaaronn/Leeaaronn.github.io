@@ -727,29 +727,24 @@ body {
 
 /* ---------- About — Interactive Dropdowns (Rocket + Satellite) ---------- */
 
-.about__interactives {
-  display: -webkit-flex;
-  display: flex;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
-  -webkit-align-items: flex-start;
-  align-items: flex-start;
-  gap: 50px;
-  margin-bottom: var(--space-8);
+.about__interactive {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: 20;
 }
 
-.about__interactive {
-  position: relative;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  -webkit-align-items: center;
-  align-items: center;
+.about__interactive--left {
+  left: 5%;
+}
+
+.about__interactive--right {
+  right: 5%;
 }
 
 .about__interactive-img {
-  width: 80px;
+  width: 120px;
   height: auto;
   cursor: pointer;
   -webkit-animation: interactive-float 3s ease-in-out infinite;
@@ -774,11 +769,10 @@ body {
 
 .about__dropdown {
   position: absolute;
-  top: 100%;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(8px);
-  transform: translateX(-50%) translateY(8px);
-  min-width: 240px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  min-width: 260px;
   background: rgba(10, 10, 10, 0.9);
   border: 1px solid rgba(96, 165, 250, 0.2);
   border-radius: 12px;
@@ -791,6 +785,16 @@ body {
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 20;
   pointer-events: none;
+}
+
+/* Rocket dropdown expands to the right */
+.about__dropdown--right {
+  left: calc(100% + 12px);
+}
+
+/* Satellite dropdown expands to the left */
+.about__dropdown--left {
+  right: calc(100% + 12px);
 }
 
 .about__interactive:hover .about__dropdown {
@@ -1185,10 +1189,7 @@ body {
     gap: 6px !important;
   }
   .about__chip { font-size: 10px !important; padding: 4px 8px !important; }
-  .about__interactives { gap: 20px !important; -webkit-justify-content: center !important; justify-content: center !important; }
-  .about__interactive-img { width: 50px !important; }
-  .about__dropdown { min-width: 180px !important; padding: 12px !important; }
-  .about__dropdown-pill { font-size: 9px !important; padding: 3px 7px !important; }
+  .about__interactive { display: none !important; }
   .about__resume-btn {
     width: 80% !important;
     margin: 0 auto !important;
