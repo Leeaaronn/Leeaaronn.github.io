@@ -90,6 +90,7 @@ export function initGlobe() {
   canvas.style.left = '0';
   canvas.style.zIndex = '1';
   canvas.style.pointerEvents = 'none';
+  canvas.style.transition = 'opacity 0.6s ease';
   document.body.appendChild(canvas);
 
   // 2. Camera setup ───────────────────────────────────────────────────────────
@@ -250,12 +251,8 @@ export function updateGlobe({ activeSection, progress, sectionIndex }) {
     }
 
   } else {
-    // LA Scene — globe fades out as the LA skyline appears
-    const fadeProgress = Math.min(progress / 0.25, 1);
-    canvas.style.opacity = String(1 - fadeProgress);
+    // LA Scene — globe is gone, sky takes over
+    canvas.style.opacity = '0';
     if (laLabelEl) laLabelEl.classList.remove('visible');
-    if (parseFloat(canvas.style.opacity) <= 0.01) {
-      canvas.style.opacity = '0';
-    }
   }
 }

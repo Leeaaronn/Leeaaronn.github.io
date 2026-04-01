@@ -62,7 +62,9 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  /* overflow: hidden forces body to be the actual scroll container,
+     so scroll events fire on body (not documentElement) */
+  overflow: hidden;
 }
 
 img, video, canvas {
@@ -101,6 +103,7 @@ body {
   /* Scroll-snap container */
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
   height: 100vh;
   height: 100svh;
 }
@@ -655,7 +658,7 @@ body {
   );
   opacity: var(--sky-progress);
   z-index: 1;
-  transition: opacity 50ms linear;
+  transition: opacity 0.6s ease;
 }
 
 /* --- Hills with Hollywood sign --- */
@@ -667,7 +670,7 @@ body {
   height: 200px;
   z-index: 2;
   opacity: var(--sky-progress);
-  transition: opacity 50ms linear;
+  transition: opacity 0.6s ease;
 }
 
 .la-scene__hills-svg {
@@ -684,7 +687,7 @@ body {
   height: 180px;
   z-index: 3;
   opacity: var(--sky-progress);
-  transition: opacity 50ms linear;
+  transition: opacity 0.6s ease;
 }
 
 .la-scene__buildings-svg {
@@ -702,7 +705,7 @@ body {
   z-index: 4;
   pointer-events: none;
   opacity: var(--sky-progress);
-  transition: opacity 50ms linear;
+  transition: opacity 0.6s ease;
 }
 
 .la-scene__palm {
@@ -730,7 +733,7 @@ body {
   background: #0a0a14;
   z-index: 5;
   opacity: var(--sky-progress);
-  transition: opacity 50ms linear;
+  transition: opacity 0.6s ease;
 }
 
 /* --- Content overlay --- */

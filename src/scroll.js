@@ -15,8 +15,12 @@ export function initScroll({ onScroll } = {}) {
   let currentActive = 'hero';
 
   function getScrollState() {
-    const scrollTop = document.body.scrollTop;
-    const scrollHeight = document.body.scrollHeight - document.body.clientHeight;
+    // Use whichever element is actually scrolling (body or documentElement)
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+    const scrollHeight = Math.max(
+      document.body.scrollHeight - document.body.clientHeight,
+      document.documentElement.scrollHeight - document.documentElement.clientHeight
+    );
 
     // Overall scroll progress (0 to 1) for the progress bar
     const overallProgress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
@@ -97,8 +101,9 @@ export function initScroll({ onScroll } = {}) {
   if (aboutSection) fadeObserver.observe(aboutSection);
   if (laSceneSection) fadeObserver.observe(laSceneSection);
 
-  // Single scroll listener on body (body is the scroll-snap container)
+  // Listen on both body and window to catch scroll events regardless of browser behavior
   document.body.addEventListener('scroll', onScrollEvent, { passive: true });
+  window.addEventListener('scroll', onScrollEvent, { passive: true });
 
   // Fire once on load to set initial state
   onScrollEvent();
