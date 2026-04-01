@@ -44,7 +44,8 @@ export function initGlobe() {
   document.body.appendChild(canvas);
 
   camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 0, 5);
+  const camZ = window.innerWidth <= 768 ? 7 : 5;
+  camera.position.set(0, 0, camZ);
   camera.lookAt(0, 0, 0);
 
   const scene = new Scene();

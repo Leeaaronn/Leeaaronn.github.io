@@ -102,6 +102,148 @@ body {
 
 
 /* ==========================================================================
+   Section 3b — Loading / Splash Screen
+   ========================================================================== */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease;
+}
+
+.loading-screen--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-screen__stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at  1%  5%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at  3% 12%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at  5% 45%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at  7% 78%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at  8% 58%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 10% 92%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 12% 34%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 14% 67%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 16% 11%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 17% 82%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 19% 52%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 21% 28%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 22%  7%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 24% 88%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 26% 39%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 27% 47%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 29% 71%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 31% 15%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 32% 73%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 34% 96%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 36% 43%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 37% 21%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 39% 62%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 41%  3%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 42% 91%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 44% 33%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 46% 76%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 47% 38%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 49% 57%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 51% 19%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 52% 65%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 54% 84%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 56%  9%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 57% 14%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 59% 49%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 61% 73%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 62% 86%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 64% 26%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 66% 55%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 67% 42%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 69% 94%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 71% 17%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 72% 69%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 74% 36%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 76% 81%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 77% 18%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 79% 60%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 81%  2%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 82% 53%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 84% 89%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 86% 31%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 87% 77%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 89% 46%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 91% 70%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 92% 29%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 94% 13%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 95% 60%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 96% 85%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 97% 95%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 98% 36%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 99% 51%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at  6% 30%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 33% 85%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 53% 22%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 73% 50%, #fff 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 64%, #fff 50%, transparent 100%);
+  opacity: 0.8;
+}
+
+.loading-screen__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.loading-screen__alien {
+  width: 260px;
+  height: auto;
+}
+
+.loading-screen__bar-track {
+  width: 300px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-screen__bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+  transition: width 3.5s ease-in-out;
+}
+
+.loading-screen__text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .loading-screen__alien {
+    width: 180px;
+  }
+  .loading-screen__bar-track {
+    width: 220px;
+  }
+}
+
+
+/* ==========================================================================
    Section 4 — Sections (normal document flow, each 100vh tall)
    ========================================================================== */
 
@@ -350,7 +492,18 @@ body {
 /* --- Hero Mobile --- */
 @media (max-width: 768px) {
   .hero__content {
-    padding: 0 var(--space-4);
+    padding: 0 24px;
+  }
+  .hero__eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+  }
+  .hero__title {
+    font-size: clamp(36px, 10vw, 44px);
+  }
+  .hero__subtitle {
+    font-size: 15px;
+    margin-bottom: var(--space-8);
   }
   .hero__ctas {
     flex-direction: column;
@@ -360,6 +513,7 @@ body {
     width: 100%;
     max-width: 280px;
     text-align: center;
+    padding: 10px 20px;
   }
 }
 
@@ -460,6 +614,8 @@ body {
 .about__stat {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: var(--space-1);
 }
 
@@ -479,9 +635,9 @@ body {
 }
 
 .about__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   margin-bottom: var(--space-8);
 }
 
@@ -533,19 +689,31 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: var(--space-8);
-    padding: var(--space-6) var(--space-4);
+    gap: var(--space-6);
+    padding: var(--space-6) 24px;
   }
 
   .about__portrait {
-    width: 240px;
-    height: 290px;
+    width: 200px;
+    height: 240px;
+    margin: 0 auto;
+  }
+
+  .about__heading {
+    font-size: 32px;
+  }
+
+  .about__bio {
+    font-size: 15px;
   }
 
   .about__stats {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-4);
-    justify-content: center;
+    justify-items: center;
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-6);
   }
 
   .about__stat {
@@ -554,12 +722,22 @@ body {
 
   .about__chips {
     justify-content: center;
+    margin-bottom: var(--space-6);
+  }
+
+  .about__chip-label {
+    font-size: 9px;
+  }
+
+  .about__chip-value {
+    font-size: 12px;
   }
 
   .about__resume-btn {
     width: 100%;
     max-width: 280px;
     text-align: center;
+    padding: 12px 20px;
   }
 }
 
@@ -704,11 +882,17 @@ body {
 /* --- LA Scene Mobile --- */
 @media (max-width: 768px) {
   .la-scene__content {
-    padding: var(--space-8) var(--space-4) var(--space-4);
+    padding: var(--space-8) 24px var(--space-4);
+  }
+
+  .la-scene__tagline {
+    font-size: 10px;
+    letter-spacing: 2px;
   }
 
   .la-scene__heading {
-    font-size: 36px;
+    font-size: 32px;
+    margin-bottom: var(--space-6);
   }
 
   .la-scene__grid {
@@ -717,12 +901,27 @@ body {
   }
 
   .la-scene__card {
-    max-width: 400px;
+    max-width: 90vw;
+  }
+
+  .la-scene__card-title {
+    font-size: 13px;
   }
 
   .la-scene__contact {
     flex-direction: column;
     align-items: center;
+  }
+
+  .la-scene__contact .hero__cta {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    padding: 10px 20px;
+  }
+
+  .la-scene__footer {
+    font-size: 10px;
   }
 }
 
@@ -737,8 +936,11 @@ body {
   left: 20px;
   z-index: 100;
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 8px;
+  min-width: 130px;
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -755,6 +957,7 @@ body {
 .volume-pill__icon {
   font-size: 16px;
   line-height: 1;
+  flex-shrink: 0;
   cursor: default;
   user-select: none;
 }
@@ -769,6 +972,9 @@ body {
   border-radius: 2px;
   outline: none;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .volume-pill__slider::-webkit-slider-thumb {
@@ -840,3 +1046,18 @@ body {
   0%, 100% { margin-top: 0; }
   50%      { margin-top: -10px; }
 }
+
+@media (max-width: 768px) {
+  .ufo {
+    width: 60px;
+  }
+  @keyframes ufo-orbit {
+    0%   { transform: translate(calc(-50% + 100px), calc(-50% + 0px))   scale(1);    }
+    25%  { transform: translate(calc(-50% + 0px),   calc(-50% - 50px))  scale(0.75); }
+    50%  { transform: translate(calc(-50% - 100px), calc(-50% + 0px))   scale(0.55); }
+    75%  { transform: translate(calc(-50% + 0px),   calc(-50% + 50px))  scale(0.75); }
+    100% { transform: translate(calc(-50% + 100px), calc(-50% + 0px))   scale(1);    }
+  }
+}
+
+

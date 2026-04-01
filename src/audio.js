@@ -1,31 +1,39 @@
 /**
- * Audio module — plays alien.mp3 once across all sections, volume slider UI.
- * Playback starts on first user interaction (autoplay policy).
+ * Audio module — two tracks:
+ *   1. alien.mp3 — plays during loading screen only, fades out before main site
+ *   2. astronaut.mp3 — plays across all sections after loading screen finishes
  */
 
-let audio = null;
+let alienAudio = null;
+let mainAudio = null;
 let sliderValue = 15; // 0-100
+let alienFadeInterval = null;
 
-function applyVolume() {
-  if (!audio) return;
-  audio.volume = (sliderValue / 100) * 0.15;
+const MAX_GAIN = 0.15;
+
+function applyMainVolume() {
+  if (!mainAudio) return;
+  mainAudio.volume = (sliderValue / 100) * MAX_GAIN;
 }
 
 /**
- * Initialize audio element and volume slider UI.
+ * Start alien.mp3 for the loading screen.
+ * Fades out starting at 3.5s, silent by 4.5s.
  */
-export function initAudio() {
-  audio = new Audio('./assets/audio/alien.mp3');
-  audio.loop = false;
-  audio.volume = 0;
+export function startLoadingAudio() {
+  alienAudio = new Audio('./assets/audio/alien.mp3');
+  alienAudio.loop = false;
+  alienAudio.volume = (sliderValue / 100) * MAX_GAIN;
 
-  // Start playback on first user interaction
+  // Try autoplay immediately
+  alienAudio.play().catch(() => {});
+
+  // Fallback: start on first interaction
   let started = false;
   const tryPlay = () => {
-    if (started) return;
+    if (started || !alienAudio.paused) { started = true; return; }
     started = true;
-    applyVolume();
-    audio.play().catch(() => {});
+    alienAudio.play().catch(() => {});
     document.removeEventListener('click', tryPlay);
     document.removeEventListener('keydown', tryPlay);
     document.removeEventListener('scroll', tryPlay);
@@ -34,7 +42,42 @@ export function initAudio() {
   document.addEventListener('keydown', tryPlay);
   document.addEventListener('scroll', tryPlay);
 
-  // Build slider UI
+  // Fade out alien audio: start at 3.5s, fully silent by 4.5s
+  const startVol = alienAudio.volume;
+  setTimeout(() => {
+    const fadeSteps = 20;
+    const fadeInterval = 1000 / fadeSteps; // 50ms steps over 1s
+    let step = 0;
+    alienFadeInterval = setInterval(() => {
+      step++;
+      alienAudio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
+      if (step >= fadeSteps) {
+        clearInterval(alienFadeInterval);
+        alienAudio.pause();
+        alienAudio.currentTime = 0;
+      }
+    }, fadeInterval);
+  }, 3500);
+}
+
+/**
+ * Start astronaut.mp3 for the main site. Called after loading screen finishes.
+ */
+export function startMainAudio() {
+  // Clean up alien audio fade if still running
+  if (alienFadeInterval) { clearInterval(alienFadeInterval); alienFadeInterval = null; }
+  if (alienAudio) { alienAudio.pause(); alienAudio.currentTime = 0; }
+
+  mainAudio = new Audio('./assets/audio/astronaut.mp3');
+  mainAudio.loop = false;
+  applyMainVolume();
+  mainAudio.play().catch(() => {});
+}
+
+/**
+ * Build and attach the volume slider UI. Controls astronaut.mp3 only.
+ */
+export function initAudioSlider() {
   const pill = document.createElement('div');
   pill.className = 'volume-pill';
 
@@ -52,7 +95,7 @@ export function initAudio() {
   slider.addEventListener('input', () => {
     sliderValue = Number(slider.value);
     icon.textContent = sliderValue === 0 ? '\u{1F507}' : '\u{1F50A}';
-    applyVolume();
+    applyMainVolume();
   });
 
   pill.appendChild(icon);
