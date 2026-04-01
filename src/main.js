@@ -250,6 +250,65 @@ function initSite() {
     statsObserver.observe(statsRow);
   }
 
+  // ── UFO cursor avoidance (desktop only) ──
+  if (!isMobile) {
+    const ufo = document.querySelector('.ufo');
+    if (ufo) {
+      let mouseX = -9999, mouseY = -9999;
+      let offsetX = 0, offsetY = 0;
+      let currentOffsetX = 0, currentOffsetY = 0;
+      let currentRotate = 0;
+      const FLEE_RADIUS = 200;
+      const FLEE_DISTANCE = 90;
+      const LERP_SPEED = 0.08;
+      const RETURN_SPEED = 0.04;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function ufoAvoidLoop() {
+        const rect = ufo.getBoundingClientRect();
+        const ufoCX = rect.left + rect.width / 2;
+        const ufoCY = rect.top + rect.height / 2;
+
+        const dx = ufoCX - mouseX;
+        const dy = ufoCY - mouseY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < FLEE_RADIUS && dist > 0) {
+          const angle = Math.atan2(dy, dx);
+          const strength = 1 - (dist / FLEE_RADIUS);
+          offsetX = Math.cos(angle) * FLEE_DISTANCE * strength;
+          offsetY = Math.sin(angle) * FLEE_DISTANCE * strength;
+        } else {
+          offsetX = 0;
+          offsetY = 0;
+        }
+
+        currentOffsetX += (offsetX - currentOffsetX) * (offsetX !== 0 ? LERP_SPEED : RETURN_SPEED);
+        currentOffsetY += (offsetY - currentOffsetY) * (offsetX !== 0 ? LERP_SPEED : RETURN_SPEED);
+
+        const targetRotate = currentOffsetX !== 0 || currentOffsetY !== 0
+          ? Math.atan2(currentOffsetY, currentOffsetX) * (180 / Math.PI) * 0.15
+          : 0;
+        currentRotate += (targetRotate - currentRotate) * 0.06;
+
+        if (Math.abs(currentOffsetX) > 0.1 || Math.abs(currentOffsetY) > 0.1 || Math.abs(currentRotate) > 0.05) {
+          ufo.style.translate = `${currentOffsetX}px ${currentOffsetY}px`;
+          ufo.style.rotate = `${currentRotate}deg`;
+        } else {
+          ufo.style.translate = '';
+          ufo.style.rotate = '';
+        }
+
+        requestAnimationFrame(ufoAvoidLoop);
+      }
+      requestAnimationFrame(ufoAvoidLoop);
+    }
+  }
+
   initScroll({
     onScroll: ({ progress }) => {
       latestProgress = progress;
