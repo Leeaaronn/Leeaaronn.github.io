@@ -95,15 +95,15 @@ export function initParticles() {
 
     // Draw cursor-to-particle lines (bright green with glow)
     ctx.save();
-    ctx.shadowColor = '#39ff14';
-    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#00ff66';
+    ctx.shadowBlur = 18;
     for (const p of particles) {
       const dx = mx - p.x;
       const dy = my - p.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < CURSOR_DIST) {
-        const alpha = 0.5 * (1 - dist / CURSOR_DIST);
-        ctx.strokeStyle = `rgba(57,255,20,${alpha})`;
+        const alpha = 0.8 - 0.3 * (dist / CURSOR_DIST);
+        ctx.strokeStyle = `rgba(0,255,102,${alpha})`;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(mx, my);

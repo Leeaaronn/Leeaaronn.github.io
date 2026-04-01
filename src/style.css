@@ -584,11 +584,6 @@ body {
   padding: var(--space-12) var(--space-8) var(--space-8);
   width: 100%;
   max-width: 900px;
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   /* opacity controlled by main.js scroll logic */
 }
 
@@ -596,8 +591,9 @@ body {
 .la-scene__heading,
 .la-scene__card-title,
 .la-scene__card-action,
-.la-scene__footer {
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+.la-scene__footer,
+.la-scene__content .hero__cta {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
 .la-scene__tagline {
@@ -811,4 +807,36 @@ body {
   .volume-pill {
     display: none;
   }
+}
+
+
+/* ==========================================================================
+   Section 13 — UFO Orbit
+   ========================================================================== */
+
+.ufo {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: auto;
+  z-index: 3;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(0, 255, 100, 0.4));
+  animation:
+    ufo-orbit 25s linear infinite,
+    ufo-bob 3s ease-in-out infinite;
+}
+
+@keyframes ufo-orbit {
+  0%   { transform: translate(calc(-50% + 180px), calc(-50% + 0px))   scale(1);    }
+  25%  { transform: translate(calc(-50% + 0px),   calc(-50% - 80px))  scale(0.75); }
+  50%  { transform: translate(calc(-50% - 180px), calc(-50% + 0px))   scale(0.55); }
+  75%  { transform: translate(calc(-50% + 0px),   calc(-50% + 80px))  scale(0.75); }
+  100% { transform: translate(calc(-50% + 180px), calc(-50% + 0px))   scale(1);    }
+}
+
+@keyframes ufo-bob {
+  0%, 100% { margin-top: 0; }
+  50%      { margin-top: -10px; }
 }

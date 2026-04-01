@@ -4,7 +4,7 @@ import { initStars } from './stars.js'
 import { initScroll } from './scroll.js'
 import { decipherText, decipherAll, decipherOnReveal } from './decipher.js'
 import { initParticles } from './particles.js'
-import { initAudio, updateAudioScroll } from './audio.js'
+import { initAudio } from './audio.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   initStars();
@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   let latestProgress = 0;
 
   function applyScrollVisuals(progress) {
-    updateAudioScroll(progress);
-
     // ── Hero content: visible 0-0.20, fade out 0.20-0.30 ──
     if (heroContent) {
       if (progress < 0.20) {
