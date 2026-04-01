@@ -90,6 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initSite() {
+  // Trigger hero fade-in animations now that loading screen is gone
+  const heroEl = document.getElementById('hero');
+  if (heroEl) heroEl.classList.add('hero--visible');
+
   initStars();
   initGlobe();
   startMainAudio();
