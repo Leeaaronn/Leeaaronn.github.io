@@ -2,7 +2,9 @@
  * Globe module — Three.js Earth globe with NASA Blue Marble texture,
  * dramatic atmospheric glow, pulsing LA marker, and scroll-driven zoom.
  *
- * Scroll journey: idle spin in hero → rotate to face LA → zoom in → fade out
+ * Camera ORBITS toward LA (not just zooms z-axis). The globe stays at
+ * the origin with no rotation — instead the camera moves to the position
+ * directly above LA on the sphere surface, looking at origin.
  */
 
 import {
@@ -28,24 +30,16 @@ let scene, camera, renderer, earthMesh, atmosphereMesh, outerGlow, markerMesh, c
 let globeGroup;
 let scrollProgress = 0;
 
-// Capture the globe's Y rotation when leaving hero zone so we can
-// smoothly interpolate from it to the LA-facing angle
-let heroEndRotY = null;
-
 const GLOBE_RADIUS = 1.5;
-const CAMERA_Z_FAR = 5;
-const CAMERA_Z_CLOSE = 1.5;
 const LA_LAT = 34.05;
 const LA_LON = -118.25;
 
-// ── LA-facing rotation calculation ──────────────────────────────────────────
-// latLonToVec3 places LA at approximately (-0.587, 0.842, 1.093) at rotation=0.
-// For LA to be centered on screen, we need new_x ≈ 0 after Y rotation:
-//   0 = x*cos(R) + z*sin(R)  →  tan(R) = -x/z = 0.587/1.093
-//   R = atan(0.537) ≈ 0.494 rad ≈ 28.3°
-const LA_FACE_Y = Math.atan2(0.587, 1.093); // ≈ 0.494 radians
-const LA_TILT_X = -0.15; // tilt to center 34°N latitude vertically
+// Camera positions
+const CAM_FAR = 5;       // hero: full Earth from deep space
+const CAM_CLOSE = 1.8;   // max zoom: just above the globe surface at LA
 
+// Camera position when directly above LA at close range
+// Use the same latLonToVec3 formula at a larger radius (camera orbit sphere)
 function latLonToVec3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
   const theta = (lon + 180) * (Math.PI / 180);
@@ -55,8 +49,15 @@ function latLonToVec3(lat, lon, radius) {
   return new Vector3(x, y, z);
 }
 
+// Pre-compute LA position on the globe surface (for marker) and on camera orbit sphere
+const LA_ON_SURFACE = latLonToVec3(LA_LAT, LA_LON, GLOBE_RADIUS * 1.01);
+const LA_CAM_TARGET = latLonToVec3(LA_LAT, LA_LON, CAM_CLOSE);
+
+// Starting camera position (looking at Earth from the front)
+const CAM_START = new Vector3(0, 0, CAM_FAR);
+
 function animate() {
-  // Idle rotation only in hero zone
+  // Slow idle rotation only in hero zone
   if (scrollProgress < 0.30) {
     globeGroup.rotation.y += 0.0005;
   }
@@ -83,7 +84,8 @@ export function initGlobe() {
   document.body.appendChild(canvas);
 
   camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 0, CAMERA_Z_FAR);
+  camera.position.copy(CAM_START);
+  camera.lookAt(0, 0, 0);
 
   scene = new Scene();
   scene.add(new AmbientLight(0x444444));
@@ -160,7 +162,6 @@ export function initGlobe() {
   globeGroup.add(outerGlow);
 
   // LA marker
-  const markerPosition = latLonToVec3(LA_LAT, LA_LON, GLOBE_RADIUS * 1.01);
   const markerGeometry = new SphereGeometry(0.03, 16, 16);
   const markerMaterial = new MeshPhongMaterial({
     color: 0xef4444,
@@ -169,7 +170,7 @@ export function initGlobe() {
     transparent: true,
   });
   markerMesh = new Mesh(markerGeometry, markerMaterial);
-  markerMesh.position.copy(markerPosition);
+  markerMesh.position.copy(LA_ON_SURFACE);
   globeGroup.add(markerMesh);
 
   clock = new Clock();
@@ -183,19 +184,35 @@ export function initGlobe() {
   });
 }
 
-/**
- * Smooth easing (ease-in-out cubic)
- */
 function easeInOutCubic(t) {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 /**
+ * Saved camera position at the moment idle rotation stops.
+ * We lerp from here to the LA orbit point.
+ */
+let heroCamSnapshot = null;
+
+/**
+ * Get the current camera start position accounting for globe idle rotation.
+ * The globe rotates during hero, so LA's world position changes.
+ * We need to compute where the camera "should" orbit from.
+ */
+function getRotatedLA(radius) {
+  // LA's local position
+  const local = latLonToVec3(LA_LAT, LA_LON, radius);
+  // Apply current globeGroup rotation
+  local.applyEuler(globeGroup.rotation);
+  return local;
+}
+
+/**
  * Update globe based on continuous scroll progress (0-1).
  *
- * 0.00-0.30: Full Earth from space, idle rotation
- * 0.30-0.60: Capture rotation, rotate to face LA, zoom in
- * 0.60-0.80: Globe fades out (crossfade to LA photo)
+ * 0.00-0.30: Full Earth from space, idle rotation, camera at (0,0,5)
+ * 0.30-0.60: Camera orbits from current position toward LA, zooming in
+ * 0.60-0.80: Globe fades out (camera stays at LA position)
  * 0.80-1.00: Globe gone
  */
 export function updateGlobe({ progress }) {
@@ -205,36 +222,39 @@ export function updateGlobe({ progress }) {
   const canvas = renderer.domElement;
 
   if (progress <= 0.30) {
-    // Hero — idle rotation, camera at far distance
-    heroEndRotY = null;
-    camera.position.z += (CAMERA_Z_FAR - camera.position.z) * 0.15;
+    // Hero — idle rotation handled in animate(), camera at far distance
+    heroCamSnapshot = null;
+    camera.position.set(0, 0, CAM_FAR);
+    camera.lookAt(0, 0, 0);
     canvas.style.opacity = '1';
 
   } else if (progress <= 0.60) {
-    const t = (progress - 0.30) / 0.30;
+    // About zone — orbit camera toward LA
+    const t = (progress - 0.30) / 0.30; // 0→1
     const eased = easeInOutCubic(t);
 
-    if (heroEndRotY === null) {
-      heroEndRotY = globeGroup.rotation.y;
+    // Snapshot the camera start and stop idle rotation on first frame
+    if (heroCamSnapshot === null) {
+      heroCamSnapshot = camera.position.clone();
     }
 
-    const TWO_PI = 2 * Math.PI;
-    const fullRots = Math.round((heroEndRotY - LA_FACE_Y) / TWO_PI);
-    const targetY = fullRots * TWO_PI + LA_FACE_Y;
+    // Compute LA's world position (accounting for accumulated globe rotation)
+    // At the moment of snapshot, globe rotation is frozen (animate stops spinning)
+    const laWorld = getRotatedLA(CAM_CLOSE);
 
-    globeGroup.rotation.y = heroEndRotY + (targetY - heroEndRotY) * eased;
-    globeGroup.rotation.x = LA_TILT_X * eased;
-
-    const zoomT = Math.max((t - 0.35) / 0.65, 0);
-    const targetZ = CAMERA_Z_FAR - (CAMERA_Z_FAR - CAMERA_Z_CLOSE) * zoomT;
-    camera.position.z += (targetZ - camera.position.z) * 0.15;
+    // Lerp camera from snapshot position toward the LA orbit point
+    camera.position.lerpVectors(heroCamSnapshot, laWorld, eased);
+    camera.lookAt(0, 0, 0);
     canvas.style.opacity = '1';
 
   } else if (progress <= 0.80) {
+    // Transition — hold camera at LA, fade globe out
     const fadeT = (progress - 0.60) / 0.20;
-    const targetZ = CAMERA_Z_CLOSE - (fadeT * 0.5);
-    camera.position.z += (targetZ - camera.position.z) * 0.15;
     canvas.style.opacity = String(1 - fadeT);
+    // Camera stays at LA orbit point, still looking at center
+    const laWorld = getRotatedLA(CAM_CLOSE);
+    camera.position.copy(laWorld);
+    camera.lookAt(0, 0, 0);
 
   } else {
     canvas.style.opacity = '0';

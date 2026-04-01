@@ -128,7 +128,7 @@ body {
   height: 100svh;
   background-image: url('/assets/beach.jpg');
   background-size: cover;
-  background-position: center top;
+  background-position: center 60%;
   background-repeat: no-repeat;
   opacity: 0;
   z-index: 0;
