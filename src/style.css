@@ -160,8 +160,8 @@ body {
 
 .la-label {
   position: fixed;
-  top: 50%;
-  left: 55%;
+  top: 45%;
+  left: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--font-mono);
   font-size: 14px;

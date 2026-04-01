@@ -2,9 +2,7 @@
  * Globe module — Three.js Earth globe with NASA Blue Marble texture,
  * dramatic atmospheric glow, pulsing LA marker, and scroll-driven zoom.
  *
- * Exports:
- *   initGlobe()              — initializes the globe and starts the animation loop
- *   updateGlobe({ progress }) — scroll-driven rotation + zoom from space to LA (progress 0-1)
+ * Scroll journey: idle spin in hero → rotate to face LA → zoom in → fade out
  */
 
 import {
@@ -29,7 +27,11 @@ import {
 let scene, camera, renderer, earthMesh, atmosphereMesh, outerGlow, markerMesh, clock;
 let globeGroup;
 let laLabelEl = null;
-let scrollProgress = 0; // shared with animate loop
+let scrollProgress = 0;
+
+// Capture the globe's Y rotation when leaving hero zone so we can
+// smoothly interpolate from it to the LA-facing angle
+let heroEndRotY = null;
 
 const GLOBE_RADIUS = 1.5;
 const CAMERA_Z_FAR = 5;
@@ -37,14 +39,13 @@ const CAMERA_Z_CLOSE = 1.5;
 const LA_LAT = 34.05;
 const LA_LON = -118.25;
 
-// Target Y rotation to face LA toward camera.
-// LA is at lon -118.25. In Three.js with standard UV mapping,
-// the globe's front (z+) shows lon=0 (Greenwich). To rotate LA to face camera,
-// we need to rotate by ~(180 + 118.25) degrees = ~298 degrees = ~5.2 radians.
-// Fine-tuned to put LA center-screen.
-const LA_Y_ROTATION = (180 + LA_LON) * (Math.PI / 180) + Math.PI;
-// Tilt to center LA latitude (34°N → slight negative X rotation)
-const LA_X_TILT = -LA_LAT * (Math.PI / 180) * 0.3;
+// ── LA-facing rotation calculation ──────────────────────────────────────────
+// latLonToVec3 places LA at approximately (-0.587, 0.842, 1.093) at rotation=0.
+// For LA to be centered on screen, we need new_x ≈ 0 after Y rotation:
+//   0 = x*cos(R) + z*sin(R)  →  tan(R) = -x/z = 0.587/1.093
+//   R = atan(0.537) ≈ 0.494 rad ≈ 28.3°
+const LA_FACE_Y = Math.atan2(0.587, 1.093); // ≈ 0.494 radians
+const LA_TILT_X = -0.15; // tilt to center 34°N latitude vertically
 
 function latLonToVec3(lat, lon, radius) {
   const phi = (90 - lat) * (Math.PI / 180);
@@ -56,8 +57,7 @@ function latLonToVec3(lat, lon, radius) {
 }
 
 function animate() {
-  // Slow idle rotation only in hero zone (progress < 0.30)
-  // In about zone, scroll drives rotation toward LA
+  // Idle rotation only in hero zone
   if (scrollProgress < 0.30) {
     globeGroup.rotation.y += 0.0005;
   }
@@ -109,7 +109,7 @@ export function initGlobe() {
   earthMesh = new Mesh(earthGeometry, earthMaterial);
   globeGroup.add(earthMesh);
 
-  // Inner atmosphere — blue rim glow (close to surface)
+  // Inner atmosphere — blue rim glow
   const atmosphereGeometry = new SphereGeometry(GLOBE_RADIUS * 1.12, 64, 64);
   const atmosphereMaterial = new ShaderMaterial({
     vertexShader: `
@@ -123,7 +123,6 @@ export function initGlobe() {
       varying vec3 vNormal;
       void main() {
         float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.0);
-        // Blue core: #60a5fa = (0.376, 0.647, 0.980)
         gl_FragColor = vec4(0.376, 0.647, 0.980, 1.0) * intensity * 1.5;
       }
     `,
@@ -134,7 +133,7 @@ export function initGlobe() {
   atmosphereMesh = new Mesh(atmosphereGeometry, atmosphereMaterial);
   globeGroup.add(atmosphereMesh);
 
-  // Outer glow — larger, purple-shifted for dramatic effect
+  // Outer glow — purple-shifted
   const outerGlowGeometry = new SphereGeometry(GLOBE_RADIUS * 1.35, 64, 64);
   const outerGlowMaterial = new ShaderMaterial({
     vertexShader: `
@@ -148,7 +147,6 @@ export function initGlobe() {
       varying vec3 vNormal;
       void main() {
         float intensity = pow(0.5 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 5.0);
-        // Purple outer: #8b5cf6 = (0.545, 0.361, 0.965)
         vec3 purple = vec3(0.545, 0.361, 0.965);
         vec3 blue = vec3(0.376, 0.647, 0.980);
         vec3 color = mix(blue, purple, intensity);
@@ -187,11 +185,18 @@ export function initGlobe() {
 }
 
 /**
+ * Smooth easing (ease-in-out cubic)
+ */
+function easeInOutCubic(t) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+/**
  * Update globe based on continuous scroll progress (0-1).
  *
  * 0.00-0.30: Full Earth from space, idle rotation
- * 0.30-0.60: ROTATE to face LA, tilt, THEN zoom in close
- * 0.60-0.80: Continue close + fade out (crossfade to LA photo)
+ * 0.30-0.60: Capture rotation, rotate to face LA, zoom in
+ * 0.60-0.80: Globe fades out (crossfade to LA photo)
  * 0.80-1.00: Globe gone
  */
 export function updateGlobe({ progress }) {
@@ -205,33 +210,41 @@ export function updateGlobe({ progress }) {
   const canvas = renderer.domElement;
 
   if (progress <= 0.30) {
-    // Hero — full Earth, idle rotation handled in animate()
+    // Hero — idle rotation, camera at far distance
+    heroEndRotY = null; // reset capture so it re-captures on next scroll into about
     camera.position.z += (CAMERA_Z_FAR - camera.position.z) * 0.15;
     canvas.style.opacity = '1';
     if (laLabelEl) laLabelEl.classList.remove('visible');
 
   } else if (progress <= 0.60) {
-    // About — rotate to face LA, then zoom
-    const t = (progress - 0.30) / 0.30; // 0→1
+    const t = (progress - 0.30) / 0.30; // 0→1 within about zone
+    const eased = easeInOutCubic(t);
 
-    // Rotate globe to face LA (first 60% of this zone = rotation, last 40% = zoom)
-    const rotateT = Math.min(t / 0.6, 1); // 0→1 over first 60%
-    const zoomT = Math.max((t - 0.4) / 0.6, 0); // 0→1 over last 60% (overlaps)
+    // Capture the rotation value when we first enter this zone
+    if (heroEndRotY === null) {
+      heroEndRotY = globeGroup.rotation.y;
+    }
 
-    // Smoothly rotate Y to face LA
-    const targetY = LA_Y_ROTATION * rotateT;
-    globeGroup.rotation.y += (targetY - globeGroup.rotation.y) * 0.12;
+    // Calculate nearest LA-facing target from the captured start.
+    // Find the closest equivalent of LA_FACE_Y (mod 2π) to heroEndRotY.
+    const TWO_PI = 2 * Math.PI;
+    const fullRots = Math.round((heroEndRotY - LA_FACE_Y) / TWO_PI);
+    const targetY = fullRots * TWO_PI + LA_FACE_Y;
+
+    // Interpolate rotation: start → LA-facing
+    globeGroup.rotation.y = heroEndRotY + (targetY - heroEndRotY) * eased;
 
     // Tilt X to center LA latitude
-    const targetX = LA_X_TILT * rotateT;
-    globeGroup.rotation.x += (targetX - globeGroup.rotation.x) * 0.12;
+    globeGroup.rotation.x = LA_TILT_X * eased;
 
-    // Zoom camera closer
+    // Zoom: camera stays far for first 40%, then zooms in remaining 60%
+    const zoomT = Math.max((t - 0.35) / 0.65, 0);
     const targetZ = CAMERA_Z_FAR - (CAMERA_Z_FAR - CAMERA_Z_CLOSE) * zoomT;
     camera.position.z += (targetZ - camera.position.z) * 0.15;
+
     canvas.style.opacity = '1';
 
-    // LA label visible in second half
+    // LA label visible in second half of zone (after rotation mostly done)
     if (laLabelEl) {
       if (t > 0.5) {
         laLabelEl.classList.add('visible');
@@ -241,7 +254,7 @@ export function updateGlobe({ progress }) {
     }
 
   } else if (progress <= 0.80) {
-    // Transition — globe continues close + fades out
+    // Transition — continue close + fade out
     const fadeT = (progress - 0.60) / 0.20;
     const targetZ = CAMERA_Z_CLOSE - (fadeT * 0.5);
     camera.position.z += (targetZ - camera.position.z) * 0.15;
