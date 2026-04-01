@@ -1151,8 +1151,8 @@ body {
   height: auto;
   z-index: 50;
   pointer-events: none;
-  -webkit-filter: drop-shadow(0 0 6px rgba(0, 255, 100, 0.4));
-  filter: drop-shadow(0 0 6px rgba(0, 255, 100, 0.4));
+  -webkit-filter: drop-shadow(0 0 10px rgba(0, 255, 100, 0.6));
+  filter: drop-shadow(0 0 10px rgba(0, 255, 100, 0.6));
   -webkit-animation: ufo-orbit 25s linear infinite;
   animation: ufo-orbit 25s linear infinite;
 }
@@ -1160,11 +1160,11 @@ body {
 @keyframes ufo-orbit {
   0%   { top: 35%; left: 85%; transform: scale(1);   opacity: 1;   }
   15%  { top: 15%; left: 65%; }
-  25%  { top: 10%; left: 40%; transform: scale(0.8); opacity: 0.3; }
+  25%  { top: 10%; left: 40%; transform: scale(0.8); opacity: 0.6; }
   35%  { top: 15%; left: 20%; }
   50%  { top: 40%; left: 10%; transform: scale(1);   opacity: 1;   }
   65%  { top: 65%; left: 25%; }
-  75%  { top: 70%; left: 50%; transform: scale(0.8); opacity: 0.3; }
+  75%  { top: 70%; left: 50%; transform: scale(0.8); opacity: 0.6; }
   85%  { top: 60%; left: 75%; }
   100% { top: 35%; left: 85%; transform: scale(1);   opacity: 1;   }
 }
