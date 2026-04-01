@@ -911,60 +911,101 @@ body {
 
 
 /* ==========================================================================
-   MOBILE OVERHAUL — single consolidated block at end for max specificity
+   MOBILE — single block, !important to guarantee overrides
    ========================================================================== */
 
 @media (max-width: 768px) {
-  /* --- Loading Screen --- */
-  .loading-screen__alien { width: 180px; }
-  .loading-screen__bar-track { width: 220px; }
+  /* Sections */
+  .section { min-height: auto !important; padding: 80px 0 40px !important; }
 
-  /* --- Nav: logo + Resume only --- */
-  .nav-bar { padding: var(--space-3) var(--space-4); }
-  .nav-bar__link:not(.nav-bar__link--resume) { display: none; }
+  /* Hero */
+  .hero__content { padding: 0 20px !important; text-align: center !important; }
+  .hero__title { font-size: 32px !important; letter-spacing: -1px !important; line-height: 1.1 !important; }
+  .hero__subtitle { font-size: 14px !important; padding: 0 10px !important; }
+  .hero__eyebrow { font-size: 10px !important; letter-spacing: 2px !important; }
+  .hero__ctas { flex-direction: column !important; align-items: center !important; gap: 10px !important; }
+  .hero__cta { width: 180px !important; text-align: center !important; padding: 10px 16px !important; font-size: 11px !important; }
 
-  /* --- Dot Nav --- */
-  .dot-nav { right: 12px; }
-  .dot-nav__dot { width: 6px; height: 6px; }
+  /* About */
+  .about__content {
+    flex-direction: column !important;
+    padding: 20px !important;
+    gap: 16px !important;
+    max-width: 100% !important;
+  }
+  .about__portrait-wrap {
+    width: 140px !important;
+    height: 180px !important;
+    margin: 0 auto !important;
+  }
+  .about__portrait { width: 100% !important; height: 100% !important; }
+  .about__text { text-align: center !important; }
+  .about__heading { font-size: 28px !important; }
+  .about__bio { font-size: 13px !important; }
+  .about__stats {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .about__stat-value { font-size: 20px !important; }
+  .about__stat-label { font-size: 8px !important; }
+  .about__chips {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+  .about__chip { font-size: 10px !important; padding: 4px 8px !important; }
+  .about__resume-btn {
+    width: 80% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    font-size: 11px !important;
+  }
 
-  /* --- Hero --- */
-  .hero__content { padding: 0 24px; }
-  .hero__title { font-size: 36px; letter-spacing: -1px; }
-  .hero__subtitle { font-size: 14px; margin-bottom: var(--space-8); }
-  .hero__eyebrow { font-size: 10px; letter-spacing: 2px; }
-  .hero__ctas { flex-direction: column; gap: 10px; align-items: center; }
-  .hero__cta { width: 200px; text-align: center; padding: 10px 20px; font-size: 11px; }
+  /* LA Scene */
+  .la-scene__content { padding: 20px 16px !important; }
+  .la-scene__heading { font-size: 26px !important; }
+  .la-scene__tagline { font-size: 9px !important; }
+  .la-scene__grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  .la-scene__card {
+    width: 100% !important;
+    max-width: 300px !important;
+    height: auto !important;
+    aspect-ratio: 1 !important;
+    margin: 0 auto !important;
+  }
+  .la-scene__contact {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
 
-  /* --- About --- */
-  .about__content { flex-direction: column; padding: 20px 24px; gap: 20px; text-align: center; align-items: center; overflow-y: auto; max-width: 100%; }
-  .about__portrait-wrap { display: none; }
-  .about__heading { font-size: 32px; text-align: center; margin-bottom: var(--space-3); }
-  .about__bio { font-size: 14px; text-align: center; line-height: 1.5; margin-bottom: var(--space-3); }
-  .about__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; justify-items: center; text-align: center; margin-top: var(--space-4); margin-bottom: var(--space-4); padding: var(--space-4) 0; }
-  .about__stat-value { font-size: 22px; }
-  .about__stat-label { font-size: 9px; }
-  .about__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: var(--space-4); }
-  .about__chip { font-size: 11px; padding: 6px 12px; }
-  .about__chip-label { font-size: 9px; }
-  .about__chip-value { font-size: 11px; }
-  .about__resume-btn { width: 100%; max-width: 280px; text-align: center; font-size: 12px; padding: 12px 20px; }
+  /* Nav */
+  .nav-bar__link:not(.nav-bar__link--resume) { display: none !important; }
+  .nav-bar { padding: 12px 16px !important; }
 
-  /* --- LA Scene --- */
-  .la-scene__content { padding: 20px 16px; background: rgba(0, 0, 0, 0.7); max-width: 100%; }
-  .la-scene__heading { font-size: 28px; margin-bottom: var(--space-6); }
-  .la-scene__tagline { font-size: 10px; letter-spacing: 2px; }
-  .la-scene__grid { grid-template-columns: 1fr; gap: 16px; }
-  .la-scene__card { width: 100%; height: auto; aspect-ratio: 1; max-width: 100%; }
-  .la-scene__card-title { font-size: 13px; }
-  .la-scene__card-action { opacity: 1; }
-  .la-scene__contact { flex-direction: column; gap: 10px; align-items: center; }
-  .la-scene__contact .hero__cta { width: 200px; text-align: center; padding: 10px 20px; }
-  .la-scene__footer { font-size: 10px; }
+  /* Hide desktop elements */
+  .astronaut-float, [class*="astronaut"] { display: none !important; }
+  .ufo-orbit, [class*="ufo"] { display: none !important; }
+  .volume-control, [class*="volume"] { display: none !important; }
+  .skills-ticker, [class*="ticker"] { display: none !important; }
+  #particles-canvas { display: none !important; }
 
-  /* --- Hide desktop-only elements --- */
-  .ufo { display: none; }
-  .volume-pill { display: none; }
+  /* Globe smaller */
+  #globe-canvas { opacity: 0.5 !important; }
 
-  /* --- Globe dimmer on mobile --- */
-  #globe-canvas { opacity: 0.6; }
+  /* Dots smaller */
+  .dot-nav { right: 8px !important; }
+  .dot-nav__dot { width: 6px !important; height: 6px !important; }
+
+  /* Progress bar */
+  .progress-bar { height: 2px !important; }
+
+  /* Loading screen */
+  .loading-screen img, .loading-screen [class*="howard"] {
+    width: 150px !important;
+  }
 }
