@@ -26,7 +26,6 @@ import {
 
 let scene, camera, renderer, earthMesh, atmosphereMesh, outerGlow, markerMesh, clock;
 let globeGroup;
-let laLabelEl = null;
 let scrollProgress = 0;
 
 // Capture the globe's Y rotation when leaving hero zone so we can
@@ -203,66 +202,41 @@ export function updateGlobe({ progress }) {
   if (!renderer) return;
   scrollProgress = progress;
 
-  if (!laLabelEl) {
-    laLabelEl = document.getElementById('la-label');
-  }
-
   const canvas = renderer.domElement;
 
   if (progress <= 0.30) {
     // Hero — idle rotation, camera at far distance
-    heroEndRotY = null; // reset capture so it re-captures on next scroll into about
+    heroEndRotY = null;
     camera.position.z += (CAMERA_Z_FAR - camera.position.z) * 0.15;
     canvas.style.opacity = '1';
-    if (laLabelEl) laLabelEl.classList.remove('visible');
 
   } else if (progress <= 0.60) {
-    const t = (progress - 0.30) / 0.30; // 0→1 within about zone
+    const t = (progress - 0.30) / 0.30;
     const eased = easeInOutCubic(t);
 
-    // Capture the rotation value when we first enter this zone
     if (heroEndRotY === null) {
       heroEndRotY = globeGroup.rotation.y;
     }
 
-    // Calculate nearest LA-facing target from the captured start.
-    // Find the closest equivalent of LA_FACE_Y (mod 2π) to heroEndRotY.
     const TWO_PI = 2 * Math.PI;
     const fullRots = Math.round((heroEndRotY - LA_FACE_Y) / TWO_PI);
     const targetY = fullRots * TWO_PI + LA_FACE_Y;
 
-    // Interpolate rotation: start → LA-facing
     globeGroup.rotation.y = heroEndRotY + (targetY - heroEndRotY) * eased;
-
-    // Tilt X to center LA latitude
     globeGroup.rotation.x = LA_TILT_X * eased;
 
-    // Zoom: camera stays far for first 40%, then zooms in remaining 60%
     const zoomT = Math.max((t - 0.35) / 0.65, 0);
     const targetZ = CAMERA_Z_FAR - (CAMERA_Z_FAR - CAMERA_Z_CLOSE) * zoomT;
     camera.position.z += (targetZ - camera.position.z) * 0.15;
-
     canvas.style.opacity = '1';
 
-    // LA label visible in second half of zone (after rotation mostly done)
-    if (laLabelEl) {
-      if (t > 0.5) {
-        laLabelEl.classList.add('visible');
-      } else {
-        laLabelEl.classList.remove('visible');
-      }
-    }
-
   } else if (progress <= 0.80) {
-    // Transition — continue close + fade out
     const fadeT = (progress - 0.60) / 0.20;
     const targetZ = CAMERA_Z_CLOSE - (fadeT * 0.5);
     camera.position.z += (targetZ - camera.position.z) * 0.15;
     canvas.style.opacity = String(1 - fadeT);
-    if (laLabelEl) laLabelEl.classList.remove('visible');
 
   } else {
     canvas.style.opacity = '0';
-    if (laLabelEl) laLabelEl.classList.remove('visible');
   }
 }
