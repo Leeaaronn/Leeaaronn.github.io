@@ -135,12 +135,10 @@ body {
 }
 
 .la-photo__img {
-  max-width: 100%;
-  max-height: 100vh;
-  max-height: 100svh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 /* Dark overlay on top of the photo for text contrast */
@@ -347,6 +345,7 @@ body {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--color-grey-1);
+  background: transparent;
   border: 1px solid #333333;
   border-radius: 8px;
   padding: 14px 28px;
@@ -413,13 +412,14 @@ body {
   align-items: flex-start;
   gap: var(--space-16);
   max-width: 1000px;
-  padding: 0 var(--space-8);
+  padding: var(--space-12) var(--space-8);
   width: 100%;
   /* opacity controlled by main.js scroll logic */
 }
 
 /* Text shadow for readability over globe — no dark card */
 .about__heading,
+.about__name,
 .about__bio,
 .about__stat-value,
 .about__stat-label,
@@ -620,8 +620,17 @@ body {
   text-align: center;
   padding: var(--space-12) var(--space-8) var(--space-8);
   width: 100%;
-  max-width: 760px;
+  max-width: 900px;
   /* opacity controlled by main.js scroll logic */
+}
+
+.la-scene__tagline {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
 }
 
 .la-scene__heading {
@@ -642,12 +651,12 @@ body {
   width: 100%;
 }
 
-/* --- Project Cards (320x320) --- */
+/* --- Project Cards (400x400, responsive) --- */
 .la-scene__card {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  max-width: 320px;
+  max-width: min(400px, 45vw);
   justify-self: center;
   border-radius: 16px;
   overflow: hidden;
@@ -672,14 +681,15 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: var(--space-3) var(--space-4);
-  background: rgba(0, 0, 0, 0.75);
-  opacity: 0;
-  transition: opacity var(--transition-base);
+  padding: 12px var(--space-4);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background var(--transition-base);
 }
 
 .la-scene__card:hover .la-scene__card-overlay {
-  opacity: 1;
+  background: rgba(0, 0, 0, 0.85);
 }
 
 .la-scene__card-title {
@@ -687,6 +697,20 @@ body {
   font-size: 14px;
   font-weight: 600;
   color: var(--color-white);
+}
+
+.la-scene__card-action {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.la-scene__card:hover .la-scene__card-action {
+  opacity: 1;
 }
 
 .la-scene__contact {
@@ -721,11 +745,94 @@ body {
   }
 
   .la-scene__card {
-    max-width: 320px;
+    max-width: 400px;
   }
 
   .la-scene__contact {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+
+/* ==========================================================================
+   Section 12 — Volume Slider Pill
+   ========================================================================== */
+
+.volume-pill {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 6px 12px;
+  opacity: 0.4;
+  transition: opacity var(--transition-base);
+}
+
+.volume-pill:hover {
+  opacity: 1;
+}
+
+.volume-pill__icon {
+  font-size: 16px;
+  line-height: 1;
+  cursor: default;
+  user-select: none;
+}
+
+/* Custom range slider */
+.volume-pill__slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+.volume-pill__slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.volume-pill__slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: none;
+  cursor: pointer;
+}
+
+.volume-pill__slider::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+}
+
+.volume-pill__slider::-moz-range-track {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .volume-pill {
+    display: none;
   }
 }

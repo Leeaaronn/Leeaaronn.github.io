@@ -91,6 +91,7 @@ export function initStars() {
       width: ${length}px;
       height: 1px;
       background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.8) 30%, rgba(255,255,255,1));
+      --angle: ${angle}deg;
       transform: rotate(${angle}deg);
       opacity: 0;
       animation: shooting-star-move ${duration}s ease-in forwards;

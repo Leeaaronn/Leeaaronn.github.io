@@ -63,9 +63,23 @@ function animate() {
   }
 
   const elapsed = clock.getElapsedTime();
-  markerMesh.material.emissiveIntensity = 0.5 + Math.sin(elapsed * 3) * 0.5;
-  const pulse = 1 + Math.sin(elapsed * 3) * 0.15;
-  markerMesh.scale.set(pulse, pulse, pulse);
+
+  // Fade marker out at 60-70% scroll so it vanishes before beach appears
+  if (scrollProgress < 0.60) {
+    markerMesh.material.opacity = 1;
+    markerMesh.material.emissiveIntensity = 0.5 + Math.sin(elapsed * 3) * 0.5;
+    const pulse = 1 + Math.sin(elapsed * 3) * 0.15;
+    markerMesh.scale.set(pulse, pulse, pulse);
+  } else if (scrollProgress < 0.70) {
+    const markerFade = 1 - ((scrollProgress - 0.60) / 0.10);
+    markerMesh.material.opacity = markerFade;
+    markerMesh.material.emissiveIntensity = (0.5 + Math.sin(elapsed * 3) * 0.5) * markerFade;
+    markerMesh.scale.set(1, 1, 1);
+  } else {
+    markerMesh.material.opacity = 0;
+    markerMesh.material.emissiveIntensity = 0;
+  }
+
   renderer.render(scene, camera);
 }
 
@@ -161,8 +175,8 @@ export function initGlobe() {
   outerGlow = new Mesh(outerGlowGeometry, outerGlowMaterial);
   globeGroup.add(outerGlow);
 
-  // LA marker
-  const markerGeometry = new SphereGeometry(0.008, 16, 16);
+  // LA marker — small pulsing dot (~8-12px on screen)
+  const markerGeometry = new SphereGeometry(0.025, 16, 16);
   const markerMaterial = new MeshPhongMaterial({
     color: 0xef4444,
     emissive: 0xef4444,
@@ -211,9 +225,10 @@ function getRotatedLA(radius) {
  * Update globe based on continuous scroll progress (0-1).
  *
  * 0.00-0.30: Full Earth from space, idle rotation, camera at (0,0,5)
- * 0.30-0.60: Camera orbits from current position toward LA, zooming in
- * 0.60-0.80: Globe fades out (camera stays at LA position)
- * 0.80-1.00: Globe gone
+ * 0.30-0.65: Camera orbits from current position toward LA, zooming in
+ * 0.60-0.70: Red LA marker fades out (before beach appears)
+ * 0.65-0.72: Globe fades to black (no overlap with beach)
+ * 0.72-1.00: Globe gone, beach takes over
  */
 export function updateGlobe({ progress }) {
   if (!renderer) return;
@@ -228,9 +243,9 @@ export function updateGlobe({ progress }) {
     camera.lookAt(0, 0, 0);
     canvas.style.opacity = '1';
 
-  } else if (progress <= 0.60) {
-    // About zone — orbit camera toward LA
-    const t = (progress - 0.30) / 0.30; // 0→1
+  } else if (progress <= 0.65) {
+    // About + zoom zone — orbit camera toward LA
+    const t = (progress - 0.30) / 0.35; // 0→1 over 0.30-0.65
     const eased = easeInOutCubic(t);
 
     // Snapshot the camera start and stop idle rotation on first frame
@@ -239,7 +254,6 @@ export function updateGlobe({ progress }) {
     }
 
     // Compute LA's world position (accounting for accumulated globe rotation)
-    // At the moment of snapshot, globe rotation is frozen (animate stops spinning)
     const laWorld = getRotatedLA(CAM_CLOSE);
 
     // Lerp camera from snapshot position toward the LA orbit point
@@ -247,11 +261,10 @@ export function updateGlobe({ progress }) {
     camera.lookAt(0, 0, 0);
     canvas.style.opacity = '1';
 
-  } else if (progress <= 0.80) {
-    // Transition — hold camera at LA, fade globe out
-    const fadeT = (progress - 0.60) / 0.20;
+  } else if (progress <= 0.72) {
+    // Globe fades to black — fully gone by 72% (before beach starts)
+    const fadeT = (progress - 0.65) / 0.07;
     canvas.style.opacity = String(1 - fadeT);
-    // Camera stays at LA orbit point, still looking at center
     const laWorld = getRotatedLA(CAM_CLOSE);
     camera.position.copy(laWorld);
     camera.lookAt(0, 0, 0);
