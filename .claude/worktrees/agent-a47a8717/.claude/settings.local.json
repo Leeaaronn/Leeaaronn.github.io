@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(gsd:plan-phase)",
+      "WebSearch",
+      "Skill(gsd:new-project)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" config-new-project '{\"\"mode\"\":\"\"yolo\"\",\"\"granularity\"\":\"\"standard\"\",\"\"parallelization\"\":true,\"\"commit_docs\"\":true,\"\"model_profile\"\":\"\"balanced\"\",\"\"workflow\"\":{\"\"research\"\":true,\"\"plan_check\"\":true,\"\"verifier\"\":true,\"\"nyquist_validation\"\":true,\"\"auto_advance\"\":false}}')",
+      "Bash(node:*)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}

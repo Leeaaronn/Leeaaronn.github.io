@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(gsd:plan-phase)",
+      "WebSearch",
+      "Skill(gsd:new-project)",
+      "Bash(node \"$HOME/.claude/get-shit-done/bin/gsd-tools.cjs\" config-new-project '{\"\"mode\"\":\"\"yolo\"\",\"\"granularity\"\":\"\"standard\"\",\"\"parallelization\"\":true,\"\"commit_docs\"\":true,\"\"model_profile\"\":\"\"balanced\"\",\"\"workflow\"\":{\"\"research\"\":true,\"\"plan_check\"\":true,\"\"verifier\"\":true,\"\"nyquist_validation\"\":true,\"\"auto_advance\"\":false}}')",
+      "Bash(node:*)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(ls /c/Users/leeaa/Leeaaronn.github.io/.planning/phases/02-canvas-layer/*VERIFICATION*)",
+      "Bash(npm run:*)",
+      "Bash(npx vite:*)",
+      "Bash(cat /c/Users/leeaa/Leeaaronn.github.io/.planning/phases/04-hero-section/*-VERIFICATION.md)",
+      "Bash(git -C /c/Users/leeaa/Leeaaronn.github.io log --oneline cd4b698 7df556c)",
+      "Bash(grep ^status: .planning/phases/04-hero-section/*-VERIFICATION.md)",
+      "Bash(grep:*)",
+      "Bash(cd:*)",
+      "Bash(ls:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}
