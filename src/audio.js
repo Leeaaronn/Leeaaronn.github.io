@@ -21,7 +21,7 @@ function applyMainVolume() {
  * Fades out starting at 3.5s, silent by 4.5s.
  */
 export function startLoadingAudio() {
-  alienAudio = new Audio('./assets/audio/alien.mp3');
+  alienAudio = new Audio('/assets/audio/alien.mp3');
   alienAudio.loop = false;
   alienAudio.volume = (sliderValue / 100) * MAX_GAIN;
 
@@ -68,7 +68,7 @@ export function startMainAudio() {
   if (alienFadeInterval) { clearInterval(alienFadeInterval); alienFadeInterval = null; }
   if (alienAudio) { alienAudio.pause(); alienAudio.currentTime = 0; }
 
-  mainAudio = new Audio('./assets/audio/astronaut.mp3');
+  mainAudio = new Audio('/assets/audio/astronaut.mp3');
   mainAudio.loop = false;
   applyMainVolume();
   mainAudio.play().catch(() => {});
