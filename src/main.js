@@ -138,38 +138,38 @@ function initSite() {
     // On mobile, all sections visible — no scroll-driven opacity
     if (isMobile) return;
 
-    // ── Hero content: visible 0-0.20, fade out 0.20-0.30 ──
+    // ── Hero content: visible 0-0.28, fade out 0.28-0.35 ──
     if (heroContent) {
-      if (progress < 0.20) {
+      if (progress < 0.28) {
         heroContent.style.opacity = '1';
-      } else if (progress < 0.30) {
-        heroContent.style.opacity = String(1 - ((progress - 0.20) / 0.10));
+      } else if (progress < 0.35) {
+        heroContent.style.opacity = String(1 - ((progress - 0.28) / 0.07));
       } else {
         heroContent.style.opacity = '0';
       }
     }
 
-    // ── About content: fade in 0.30-0.38, visible 0.38-0.58, fade out 0.58-0.65 ──
+    // ── About content: fade in 0.28-0.35, visible 0.35-0.62, fade out 0.62-0.70 ──
     if (aboutContent) {
-      if (progress < 0.30) {
+      if (progress < 0.28) {
         aboutContent.style.opacity = '0';
-      } else if (progress < 0.38) {
-        aboutContent.style.opacity = String((progress - 0.30) / 0.08);
-      } else if (progress < 0.58) {
+      } else if (progress < 0.35) {
+        aboutContent.style.opacity = String((progress - 0.28) / 0.07);
+      } else if (progress < 0.62) {
         aboutContent.style.opacity = '1';
-      } else if (progress < 0.65) {
-        aboutContent.style.opacity = String(1 - ((progress - 0.58) / 0.07));
+      } else if (progress < 0.70) {
+        aboutContent.style.opacity = String(1 - ((progress - 0.62) / 0.08));
       } else {
         aboutContent.style.opacity = '0';
       }
     }
 
-    // ── LA content: fade in 0.65-0.73, visible 0.73+ ──
+    // ── LA content: fade in 0.68-0.75, visible 0.75+ ──
     if (laContent) {
-      if (progress < 0.65) {
+      if (progress < 0.68) {
         laContent.style.opacity = '0';
-      } else if (progress < 0.73) {
-        laContent.style.opacity = String((progress - 0.65) / 0.08);
+      } else if (progress < 0.75) {
+        laContent.style.opacity = String((progress - 0.68) / 0.07);
       } else {
         laContent.style.opacity = '1';
       }

@@ -421,6 +421,9 @@ body {
 .hero__content {
   position: relative;
   z-index: 10;
+  will-change: opacity;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: column;
@@ -537,6 +540,9 @@ body {
 .about__content {
   position: relative;
   z-index: 10;
+  will-change: opacity;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: row;
@@ -735,6 +741,9 @@ body {
 .la-scene__content {
   position: relative;
   z-index: 10;
+  will-change: opacity;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
   display: -webkit-flex;
   display: flex;
   -webkit-flex-direction: column;
