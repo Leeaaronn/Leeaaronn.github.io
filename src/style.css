@@ -732,17 +732,17 @@ body {
   z-index: 20;
 }
 
-/* Rocket — bottom-left, rotated 45deg like launching from Earth */
+/* Rocket — bottom-left, closer to Earth */
 .about__interactive--left {
-  left: 12vw;
-  bottom: 30%;
+  left: 25vw;
+  bottom: 25%;
   top: auto;
 }
 
-/* Satellite — right side, near Earth's atmosphere */
+/* Satellite — right side, in the atmosphere/blue glow */
 .about__interactive--right {
-  right: 17vw;
-  top: 45%;
+  right: 25vw;
+  top: 40%;
 }
 
 .about__interactive-img {
@@ -825,14 +825,14 @@ body {
   pointer-events: none;
 }
 
-/* Rocket dropdown expands to the right */
+/* Rocket dropdown expands to the left */
 .about__dropdown--right {
-  left: calc(100% + 12px);
+  right: calc(100% + 12px);
 }
 
-/* Satellite dropdown expands to the left */
+/* Satellite dropdown expands to the right */
 .about__dropdown--left {
-  right: calc(100% + 12px);
+  left: calc(100% + 12px);
 }
 
 .about__interactive:hover .about__dropdown {
